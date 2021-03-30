@@ -9,3 +9,5 @@ Our motivation behind choosing to create a recommendation system for movies is b
 The goal was to build a recommendation system that will recommend movies based on the given genre's. To increase the proejct's complexity, we decided to use Graphic User-Interface that will output the list of recommended movies in the pop-window, and adding other necessary buttons for the reviews that will be extracted from the web.
 
 
+# Dataset Used: 
+https://www.kaggle.com/stefanoleone992/imdb-extensive-dataset -- We found this massive 81,000 rows with 22 columns dataset contains the list of the movies on IMBD.   
