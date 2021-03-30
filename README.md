@@ -1,2 +1,4 @@
 # CSC111
-This is was a Final Project collaborated within a group of 4 team members. The description of our final project was to create a recommendation system (Using Weighted Graphs) and displaying the output with a UI.
+Final Project in 1st Year, using Graphs
+
+Description: The goal was to build a recommendation system that will recommend movies based on the given genre's. With the help of Graphic User-Interface, the output of the recommended movies will be displayed and the reviews will be extracted from the web.
