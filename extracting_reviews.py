@@ -25,13 +25,11 @@ def fetch_movie_reviews(review_title: str) -> dict:
     """
 
     # First we need to set up the browser
-    browser = webdriver.Chrome(executable_path=r'C:\Users\Armaa\Music\UOFT '
-                                               r'CSC111\csc111\chromedriver.exe')
-    # options = Options()
-    # options.add_argument("--headless")
-    # browser = webdriver.Chrome(
-    #     executable_path=r'C:\Users\Armaa\Music\UOFT CSC111\csc111\chromedriver.exe',
-    #     options=options)
+    options = Options()
+    options.add_argument("--headless")
+    browser = webdriver.Chrome(
+        executable_path=r'C:\Users\Armaa\Music\UOFT CSC111\csc111\chromedriver.exe',
+        options=options)
 
     # Go to google the Browser
     browser.get('https://www.google.com')
@@ -39,18 +37,6 @@ def fetch_movie_reviews(review_title: str) -> dict:
     # Enters movie name + imbd in the google search bar:
     browser.find_element_by_name('q').send_keys(review_title + " imdb")
     time.sleep(1)
-
-    # # Clicks the "Search" on google to see the results
-    # browser.find_element_by_name("btnK").send_keys(Keys.ENTER)
-    # time.sleep(1)
-    #
-    # # Clicks on the first search result (IMBD for the movie name)
-    # browser.find_element_by_name("yuRUbf").click()
-    # time.sleep(5)
-    #
-    # # Clicks the "User Reviews" opn the movie IMBD page
-    # browser.find_element_by_xpath(
-    #     "//*[@id='quicklinksMainSection']/a[3]").click()
 
     # Click the google search button
     browser.find_element_by_name("btnK").send_keys(Keys.ENTER)
