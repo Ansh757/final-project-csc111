@@ -12,38 +12,26 @@ import kivy
 from kivy.app import App
 from kivy.uix.label import Label
 from kivy.uix.gridlayout import GridLayout
+from kivy.uix.floatlayout import FloatLayout
+from kivy.uix.anchorlayout import AnchorLayout
+from kivy.uix.image import Image
 from kivy.uix.textinput import TextInput
 from kivy.uix.button import Button
+from kivy.uix.widget import Widget
+from kivy.core.window import Window
+from kivy.config import Config
 
 
-class MyGrid(GridLayout):
+class MyGrid(Widget):
     """
     ...
     """
-
-    def __init__(self, **kwargs):
-        super(MyGrid, self).__init__(**kwargs)
-        # Set columns
-        self.rows = 4
-
-        # Create a second gridlayout
-        self.top_grid = GridLayout()
-        # Set number of columns in our new top_grid
-        self.top_grid.rows = 1
-
-        # Add widgets
-        self.add_widget(Label(text="Top Recommendations"))
-
-        self.top_grid.add_widget(Button(text="Movie1"))
-        self.top_grid.add_widget(Button(text="Movie 2 "))
-        self.top_grid.add_widget(Button(text="Movie 3"))
-
-        # Add the new top_grid to our app
-        self.add_widget(self.top_grid)
+    pass
 
 
 class MyApp(App):
     def build(self):
+        Window.size = (800, 900)
         return MyGrid()
 
 
