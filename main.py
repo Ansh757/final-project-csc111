@@ -3,133 +3,177 @@ Final Project Title: IMBD Recommendation System
 
 Objective: ...
 
-By: Ansh Malhotra, Armaan Mann, Leya Abubaker, Gabriel Pais
+By: Ansh Malhotra, Armaan Mann, Leya Abubaker
 
-This file is Copyright (c) 2021 Ansh Malhotra, Armaan Mann, Leya Abubaker, Gabriel Pais
+This file is Copyright (c) 2021 Ansh Malhotra, Armaan Mann, Leya Abubaker
 """
 from __future__ import annotations
 import csv
-from typing import Any, Union
+from typing import Optional
+import networkx as nx
+from plotly.graph_objs import Scatter, Figure
+from Graph_Vertex import Graph
 
 
-class _Vertex:
-    """A vertex in a ... graph, used to represent a node for each movie.
+def filtered_graph(imdb_file: str, genre: list[str], year: tuple[int, int],
+                   director: Optional[str] = None, language: Optional[str] = None,
+                   country: Optional[str] = None) -> Graph:
+    """ Return a movies review graph corresponding to the filtered IMDB dataset.
 
-    List of genres: [
-                    ]
-
-    Instance Attributes:
-        - item: The data stored in this vertex, representing the title of a movie.
-        - kind: The type of this vertex: contains the list of genres.
-        - neighbours: The vertices that are adjacent to this vertex.
-
-    Representation Invariants:
-        - self not in self.neighbours
-        - all(self in u.neighbours for u in self.neighbours)
-        - self.kind in {...}
+    If a filter is not chosen the key-value pair will have a None type.
     """
-    item: Any
-    kind: set[str]
-    neighbours: dict[_Vertex, Union[float, int]]
+    new_graph = Graph()
+    new_dict = {}
 
-    def __init__(self, item: Any, kind: set[str]) -> None:
-        """Initialize a new vertex with the given item and kind.
+    with open(imdb_file) as csv_file:
+        reader = csv.reader(csv_file)
+        next(reader)
+        for row in reader:
 
-        This vertex is initialized with no neighbours.
+            check1 = True if int(row[3]) in range(year[0], year[1] + 1) else False
+            check2 = True if country is None or row[7].casefold() == country.casefold() else False
+            check3 = True if language is None or row[8].casefold() == language.casefold() else False
+            check4 = True if director is None or row[9].casefold() == director.casefold() else False
 
-        Preconditions:
-            - kind in {...}
-        """
-        self.item = item
-        self.kind = kind
-        self.neighbours = {}
+            check = [check1, check2, check3, check4]
 
-    def degree(self) -> int:
-        """Return the degree of this vertex"""
-        return len(self.neighbours)
+            genres = [g.strip() for g in row[5].split(",")]
+            for x in genres:
+                if x in genre:
+                    check.append(True)
 
-    def similarity_score_unweighted(self, other: _Vertex) -> float:
-        """Return the ... similarity score between this vertex and other.
+            if all(check):
+                new_dict[row[1]] = set(genres)
+                new_graph.add_vertex(row[1], set(genres))
 
-        The unweighted similarity score is calculated in the same way as the
-        similarity score for _Vertex (from Part 1). That is, just look at edges,
-        and ignore the weights.
-        """
-        if self.degree() == 0 or other.degree() == 0:
-            return 0.0
-        else:
-            ...
-            # TODO: Implement the formula to find out the similarity score betweem two vertices
+        for title1 in new_dict:
+            for title2 in new_dict:
+                if title1 != title2:
+                    if new_dict[title1].intersection(new_dict[title2]) != set():
+                        new_graph.add_edge(title1, title2)
+
+    return new_graph
 
 
-class Graph:
-    """A graph used to represent a movie network.
+def load_graph(imbd_file: str) -> Graph:
+    """Return a movies review graph corresponding to the given IMBD dataset."""
+    new_graph = Graph()
+    new_dict = {}
+
+    with open(imbd_file, encoding="utf8") as f1:
+        reader1 = csv.reader(f1)
+        next(reader1)
+
+        for row in reader1:
+            genres = [genre.strip() for genre in row[5].split(",")]
+            new_dict[row[1]] = set(genres)
+
+            new_graph.add_vertex(row[1], set(genres))
+
+        for title1 in new_dict:
+            for title2 in new_dict:
+                if title1 != title2:
+                    if new_dict[title1].intersection(new_dict[title2]) != set():
+                        new_graph.add_edge(title1, title2)
+
+    return new_graph
+
+
+# Colours to use when visualizing different clusters.
+COLOUR_SCHEME = [
+    '#2E91E5', '#E15F99', '#1CA71C', '#FB0D0D', '#DA16FF', '#222A2A', '#B68100',
+    '#750D86', '#EB663B', '#511CFB', '#00A08B', '#FB00D1', '#FC0080', '#B2828D',
+    '#6C7C32', '#778AAE', '#862A16', '#A777F1', '#620042', '#1616A7', '#DA60CA',
+    '#6C4516', '#0D2A63', '#AF0038'
+]
+
+LINE_COLOUR = 'rgb(210,210,210)'
+VERTEX_BORDER_COLOUR = 'rgb(50, 50, 50)'
+BOOK_COLOUR = 'rgb(89, 205, 105)'
+USER_COLOUR = 'rgb(105, 89, 205)'
+
+
+def visualize_graph(graph: Graph,
+                    layout: str = 'spring_layout',
+                    max_vertices: int = 5000,
+                    output_file: str = '') -> None:
+    """Use plotly and networkx to visualize the given graph.
+
+    Optional arguments:
+        - layout: which graph layout algorithm to use
+        - max_vertices: the maximum number of vertices that can appear in the graph
+        - output_file: a filename to save the plotly image to (rather than displaying
+            in your web browser)
     """
-    # Private Instance Attributes:
-    #     - _vertices:
-    #         A collection of the vertices contained in this graph.
-    #         Maps item to _Vertex object.
-    _vertices: dict[Any, _Vertex]
+    graph_nx = graph.to_networkx(max_vertices)
 
-    def __init__(self) -> None:
-        """Initialize an empty graph (no vertices or edges)."""
-        self._vertices = {}
+    pos = getattr(nx, layout)(graph_nx)
 
-        # This call isn't necessary, except to satisfy PythonTA.
-        Graph.__init__(self)
+    x_values = [pos[k][0] for k in graph_nx.nodes]
+    y_values = [pos[k][1] for k in graph_nx.nodes]
+    labels = list(graph_nx.nodes)
+    kinds = [graph_nx.nodes[k]['kind'] for k in graph_nx.nodes]
 
-    def add_vertex(self, item: Any, kind: set[str]) -> None:
-        """Add a vertex with the given item and set of kind to this graph.
+    colours = [BOOK_COLOUR if kind == 'book' else USER_COLOUR for kind in kinds]
 
-        The new vertex is not adjacent to any other vertices.
-        Do nothing if the given item is already in this graph.
+    x_edges = []
+    y_edges = []
+    for edge in graph_nx.edges:
+        x_edges += [pos[edge[0]][0], pos[edge[1]][0], None]
+        y_edges += [pos[edge[0]][1], pos[edge[1]][1], None]
 
-        Preconditions:
-            - kind in {...}
-        """
-        if item not in self._vertices:
-            self._vertices[item] = _Vertex(item, kind)
+    trace3 = Scatter(x=x_edges,
+                     y=y_edges,
+                     mode='lines',
+                     name='edges',
+                     line=dict(color=LINE_COLOUR, width=1),
+                     hoverinfo='none',
+                     )
+    trace4 = Scatter(x=x_values,
+                     y=y_values,
+                     mode='markers',
+                     name='nodes',
+                     marker=dict(symbol='circle-dot',
+                                 size=5,
+                                 color=colours,
+                                 line=dict(color=VERTEX_BORDER_COLOUR, width=0.5)
+                                 ),
+                     text=labels,
+                     hovertemplate='%{text}',
+                     hoverlabel={'namelength': 0}
+                     )
 
-    def add_edge(self, item1: Any, item2: Any, weight: Union[int, float] = 1) -> None:
-        """Add an edge between the two vertices with the given items in this graph,
-        with the given weight.
+    data1 = [trace3, trace4]
+    fig = Figure(data=data1)
+    fig.update_layout({'showlegend': False})
+    fig.update_xaxes(showgrid=False, zeroline=False, visible=False)
+    fig.update_yaxes(showgrid=False, zeroline=False, visible=False)
 
-        Raise a ValueError if item1 or item2 do not appear as vertices in this graph.
+    if output_file == '':
+        fig.show()
+    else:
+        fig.write_image(output_file)
 
-        Preconditions:
-            - item1 != item2
-        """
-        if item1 in self._vertices and item2 in self._vertices:
-            v1 = self._vertices[item1]
-            v2 = self._vertices[item2]
-
-            # Add the new edge
-            v1.neighbours[v2] = weight
-            v2.neighbours[v1] = weight
-        else:
-            # We didn't find an existing vertex for both items.
-            raise ValueError
-
-    def get_weight(self, item1: Any, item2: Any) -> Union[int, float]:
-        """Return the weight of the edge between the given items.
-
-        Return 0 if item1 and item2 are not adjacent.
-
-        Preconditions:
-            - item1 and item2 are vertices in this graph
-        """
-        # TODO: Calculate the formula for the weight
-        v1 = self._vertices[item1]
-        v2 = self._vertices[item2]
-        return v1.neighbours.get(v2, 0)
-
-    def average_weight(self, item: Any) -> float:
-        """Return the average weight of the edges adjacent to the vertex corresponding to item.
-
-        Raise ValueError if item does not corresponding to a vertex in the graph.
-        """
-        if item in self._vertices:
-            v = self._vertices[item]
-            return sum(v.neighbours.values()) / len(v.neighbours)
-        else:
-            raise ValueError
+# def similarity_score_unweighted(self, other: _Vertex) -> float:
+#     """Return the unweighted similarity score between this vertex and other.
+#
+#     The unweighted similarity score is calculated in the same way as the
+#     similarity score for _Vertex (from Part 1). That is, just look at edges,
+#     and ignore the weights.
+#     """
+#     if self.degree() == 0 or other.degree() == 0:
+#         return 0.0
+#     else:
+#         v1 = self.neighbours.keys()
+#         v2 = other.neighbours.keys()
+#         return len(set(v2).intersection(set(v1))) / len(set(v1).union(set(v2)))
+#
+# def similarity_score_weighted(self, other: _Vertex) -> float:
+#     """Return the weighted similarity score between this vertex and other."""
+#     if self.kind == set():
+#         return 0.0
+#     else:
+#         numerator = self.kind.intersection(other.kind)
+#         denominator = self.kind.union(other.kind)
+#         result = len(numerator) / len(denominator)
+#         return result
