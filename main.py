@@ -25,7 +25,17 @@ def filtered_graph(imdb_file: str, genre: list[str], year: tuple[int, int],
                    country: Optional[str] = None) -> Graph:
     """ Return a movies review graph corresponding to the filtered IMDB dataset.
 
-    If a filter is not chosen the key-value pair will have a None type.
+    If a filter is not chosen the key-value pair will have a None type..
+
+    The data set must be chosen from the data folder, you may choose any small, medium, large
+    to visualize the graph.
+
+    Refer to the dataset for specific languages, countries and directors available.
+
+    Preconditions:
+        - imdb_file is the path to a CSV file corresponding to the IMDB movies dataset
+          given as "data/small_dataset.csv"
+        - The given filter should be in the form of language="English" or country="USA".
     """
     new_graph = Graph()
     new_dict = {}
@@ -60,12 +70,20 @@ def filtered_graph(imdb_file: str, genre: list[str], year: tuple[int, int],
     return new_graph
 
 
-def load_graph(imbd_file: str) -> Graph:
-    """Return a movies review graph corresponding to the given IMBD dataset."""
+def load_graph(imdb_file: str) -> Graph:
+    """Return a movies review graph corresponding to the given IMBD dataset.
+
+    The data set must be chosen from the data folder, you may choose any small, medium, large
+    to visualize the graph.
+
+    Preconditions:
+        - imdb_file is the path to a CSV file corresponding to the IMDB movies dataset
+          given as "data/small_dataset.csv"
+    """
     new_graph = Graph()
     new_dict = {}
 
-    with open(imbd_file) as f1:
+    with open(imdb_file) as f1:
         reader1 = csv.reader(f1)
         next(reader1)
 
