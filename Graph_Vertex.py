@@ -1,11 +1,11 @@
 """
-Final Project Title: ...
+Final Project Title: IMBD Recommendation System
 
-Objective: ...
+Objective: This file includes the Augmented Graph and Vertex taken from the lectures and assignment.
 
 By: Ansh Malhotra, Armaan Mann, Leya Abubaker
 
-This file is Copyright (c) 2021 Ansh Malhotra, Armaan Mann, Leya Abubaker, Gabriel Pais
+This file is Copyright (c) 2021 Ansh Malhotra, Armaan Mann, Leya Abubaker
 """
 from __future__ import annotations
 from typing import Any, Union
