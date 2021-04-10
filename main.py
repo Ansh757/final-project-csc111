@@ -112,9 +112,9 @@ def visualize_graph(graph: Graph,
     x_values = [pos[k][0] for k in graph_nx.nodes]
     y_values = [pos[k][1] for k in graph_nx.nodes]
     labels = list(graph_nx.nodes)
-    kinds = [graph_nx.nodes[k]['kind'] for k in graph_nx.nodes]
+    # kinds = [graph_nx.nodes[k]['kind'] for k in graph_nx.nodes]
 
-    colours = [BOOK_COLOUR if kind == 'book' else USER_COLOUR for kind in kinds]
+    # colours = [BOOK_COLOUR if kind == 'book' else USER_COLOUR for kind in kinds]
 
     x_edges = []
     y_edges = []
@@ -135,7 +135,7 @@ def visualize_graph(graph: Graph,
                      name='nodes',
                      marker=dict(symbol='circle-dot',
                                  size=5,
-                                 color=colours,
+                                 color=BOOK_COLOUR,
                                  line=dict(color=VERTEX_BORDER_COLOUR, width=0.5)
                                  ),
                      text=labels,
