@@ -104,9 +104,6 @@ def visualize_graph(graph: Graph,
     x_values = [pos[k][0] for k in graph_nx.nodes]
     y_values = [pos[k][1] for k in graph_nx.nodes]
     labels = list(graph_nx.nodes)
-    # kinds = [graph_nx.nodes[k]['kind'] for k in graph_nx.nodes]
-
-    # colours = [BOOK_COLOUR if kind == 'book' else USER_COLOUR for kind in kinds]
 
     x_edges = []
     y_edges = []
