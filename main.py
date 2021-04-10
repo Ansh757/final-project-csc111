@@ -74,12 +74,13 @@ def load_graph(imbd_file: str) -> Graph:
     new_graph = Graph()
     new_dict = {}
 
-    with open(imbd_file, encoding="utf8") as f1:
+    with open(imbd_file) as f1:
         reader1 = csv.reader(f1)
         next(reader1)
 
         for row in reader1:
-            genres = [genre.strip() for genre in row[5].split(",")]
+            split_ = row[5].strip()
+            genres = [genre.strip() for genre in split_.split(",")]
             new_dict[row[1]] = set(genres)
 
             new_graph.add_vertex(row[1], set(genres))

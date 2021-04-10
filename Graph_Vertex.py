@@ -8,28 +8,27 @@ By: Ansh Malhotra, Armaan Mann, Leya Abubaker
 This file is Copyright (c) 2021 Ansh Malhotra, Armaan Mann, Leya Abubaker, Gabriel Pais
 """
 from __future__ import annotations
-import csv
 from typing import Any, Optional, Union
 import networkx as nx
-from plotly.graph_objs import Scatter, Figure
 
 
 # TODO LOOK OVER DOCSTRINGS.
 class _Vertex:
-    """A vertex in a ... graph, used to represent a node for each movie.
+    """A vertex in a movies graph, used to represent a node for the movie.
 
-    List of genres: [
-                    ]
+    List of genres: {'Reality-TV', 'Adventure', 'Drama', 'Biography', 'War', 'Family', 'Music',
+    'Crime', 'Film-Noir', 'Romance', 'Musical', 'Comedy', 'Horror', 'News', 'Action', 'Sport',
+    'History', 'Western', 'Fantasy', 'Thriller', 'Documentary', 'Animation', 'Adult',
+    'Sci-Fi', 'Mystery'}
 
     Instance Attributes:
         - item: The data stored in this vertex, representing the title of a movie.
-        - kind: The type of this vertex: contains the list of genres.
+        - genres: The type of this vertex: contains the list of genres.
         - neighbours: The vertices that are adjacent to this vertex.
 
     Representation Invariants:
         - self not in self.neighbours
         - all(self in u.neighbours for u in self.neighbours)
-        - self.kind in {...}
     """
     item: Any
     genres: set[str]
@@ -39,9 +38,6 @@ class _Vertex:
         """Initialize a new vertex with the given item and kind.
 
         This vertex is initialized with no neighbours.
-
-        Preconditions:
-            - kind in {...}
         """
         self.item = item
         self.genres = kind
@@ -52,7 +48,7 @@ class _Vertex:
         return len(self.neighbours)
 
     def calculate_weight(self, other: _Vertex) -> float:
-        """Return the weight between this vertex and other."""
+        """Return the weight between the given vertex and other."""
         if self.genres == set():
             return 0.0
         else:
@@ -90,32 +86,24 @@ class Graph:
         """Initialize an empty graph (no vertices or edges)."""
         self._vertices = {}
 
-        # This call isn't necessary, except to satisfy PythonTA.
-        # Graph.__init__(self)
-
     def get_all_vertices(self) -> set:
         """Return a set of all vertex items in this graph.
         """
-
         return {v.item for v in self._vertices.values()}
-
-        # return {v.item for v in self._vertices}
 
     def add_vertex(self, item: Any, kind: set[str]) -> None:
         """Add a vertex with the given item and set of kind to this graph.
 
         The new vertex is not adjacent to any other vertices.
-        Do nothing if the given item is already in this graph.
 
         Preconditions:
-            - kind in {...}
+            - self not in self._vertices
         """
         if item not in self._vertices:
             self._vertices[item] = _Vertex(item, kind)
 
     def add_edge(self, item1: Any, item2: Any) -> None:
-        """Add an edge between the two vertices with the given items in this graph,
-        with the given weight.
+        """Add an edge between the two vertices with the given items in this graph.
 
         Raise a ValueError if item1 or item2 do not appear as vertices in this graph.
 
@@ -133,17 +121,6 @@ class Graph:
             # We didn't find an existing vertex for both items.
             raise ValueError
 
-    def average_weight(self, item: Any) -> float:
-        """Return the average weight of the edges adjacent to the vertex corresponding to item.
-
-        Raise ValueError if item does not corresponding to a vertex in the graph.
-        """
-        # TODO
-        if item in self._vertices:
-            v = self._vertices[item]
-            return sum(v.neighbours.values()) / len(v.neighbours)
-        else:
-            raise ValueError
 
     def get_similarity_score(self, item1: Any, item2: Any) -> float:
         """Return the similarity score between the two given items in this graph.
