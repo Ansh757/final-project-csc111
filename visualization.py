@@ -21,7 +21,6 @@ from kivy.uix.widget import Widget
 from kivy.core.window import Window
 from kivy.config import Config
 
-
 class MyGrid(Widget):
     """
     ...
