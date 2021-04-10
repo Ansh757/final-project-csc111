@@ -121,6 +121,16 @@ class Graph:
             # We didn't find an existing vertex for both items.
             raise ValueError
 
+    def adjacent(self, item1: Any, item2: Any) -> bool:
+        """Return whether item1 and item2 are adjacent vertices in this graph.
+
+        Return False if item1 or item2 do not appear as vertices in this graph.
+        """
+        if item1 in self._vertices and item2 in self._vertices:
+            v1 = self._vertices[item1]
+            return any(v2.item == item2 for v2 in v1.neighbours)
+        else:
+            return False
 
     def get_similarity_score(self, item1: Any, item2: Any) -> float:
         """Return the similarity score between the two given items in this graph.

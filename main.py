@@ -145,4 +145,3 @@ def visualize_graph(graph: Graph,
         fig.show()
     else:
         fig.write_image(output_file)
-
