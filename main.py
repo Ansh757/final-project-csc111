@@ -1,5 +1,5 @@
 """
-Final Project Title: IMBD Recommendation System
+Final Project Title: IMDB Recommendation System
 
 Objective: ...
 

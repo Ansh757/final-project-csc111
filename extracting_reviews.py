@@ -1,5 +1,5 @@
 """
-Final Project Title: ...
+Final Project Title: IMDB Recommendation System
 
 Objective: Fetch the reviews from the internet and converting it into a CSV file such that
 we can use it for the UI

@@ -1,5 +1,5 @@
 """
-Final Project Title: IMBD Recommendation System
+Final Project Title: IMDB Recommendation System
 
 Objective: This file includes the Augmented Graph and Vertex taken from the lectures and assignment.
 
