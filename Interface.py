@@ -22,7 +22,7 @@ class MyGrid(Widget):
         show_popup()
 
 
-class P:
+class P(FloatLayout):
     pass
 
 
@@ -35,10 +35,9 @@ class MyApp(App):
 def show_popup():
     """
     ...
-
     """
     show = P()
-    popup_window = Popup(text="Movie Name", content=show, size_hint=(None, None), size=(800, 900))
+    popup_window = Popup(title="Movie Name", content=show, size_hint=(None, None), size=(800, 900))
 
     popup_window.open()
 
