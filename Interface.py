@@ -12,6 +12,8 @@ from kivy.core.window import Window
 from kivy.config import Config
 from kivy.uix.popup import Popup
 
+from extracting_reviews import trailers
+
 
 class MyGrid(Widget):
     """
@@ -22,13 +24,16 @@ class MyGrid(Widget):
         show_popup()
 
 
+
+
 class P(FloatLayout):
-    pass
+    def ytube(self):
+        show_trailer()
 
 
 class MyApp(App):
     def build(self):
-        Window.size = (800, 900)
+        Window.size = (600, 550)
         return MyGrid()
 
 
@@ -41,6 +46,8 @@ def show_popup():
 
     popup_window.open()
 
+def show_trailer():
+    trailers('quo vadis aida')
 
 if __name__ == '__main__':
     MyApp().run()

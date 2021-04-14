@@ -16,7 +16,6 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.keys import Keys
 import pprint
 
-
 def fetch_movie_reviews(review_title: str) -> dict:
     """
     Return a dictionary, where the key is the title of the review and the value
@@ -72,3 +71,22 @@ def fetch_movie_reviews(review_title: str) -> dict:
 
     return {"Review Title": review_title,
             "Review Description": review_description}
+
+
+def trailers(review_title: str):
+    """..."""
+
+    browser = webdriver.Chrome(
+        executable_path=r'C:\Users\Armaa\Music\UOFT CSC111\csc111\chromedriver.exe')
+
+    browser.get('https://www.google.com')
+
+    browser.find_element_by_name('q').send_keys(review_title + " trailer")
+    time.sleep(1)
+
+    browser.find_element_by_name("btnK").send_keys(Keys.ENTER)
+    time.sleep(1)
+
+    browser.find_element_by_xpath(
+        """// *[ @ id = "rso"] / div[2] / div[1] / div / div[1] / a[1] / h3""").click()
+    time.sleep(5)
