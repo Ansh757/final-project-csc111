@@ -25,9 +25,9 @@ def fetch_movie_reviews(review_title: str) -> dict:
     """
 
     # First we need to set up the browser
-    options = Options()
-    options.add_argument("--headless")
-    browser = webdriver.Chrome(ChromeDriverManager().install(), options=options)
+    # options = Options()
+    # options.add_argument("--headless")
+    browser = webdriver.Chrome(ChromeDriverManager().install())
 
     # Go to google the Browser
     browser.get('https://www.google.com')
@@ -41,7 +41,8 @@ def fetch_movie_reviews(review_title: str) -> dict:
     time.sleep(1)
 
     # Click the link
-    browser.find_element_by_xpath("//*[@id='rso']/div[1]/div/div/div/div[1]/a").click()
+    browser.find_element_by_xpath("""/ html / body / div[7] / div / div[9] / div[1] / div / div[2] / div[2] / div / div / div[
+        1] / div / div / div / div / div[1] / a / h3""").click()
     time.sleep(5)
 
     # Click the user reviews
@@ -91,3 +92,4 @@ def trailers(review_title: str):
 
     "/ html / body / div[7] / div / div[9] / div[1] / div / div[2] / div[2] / div / div / div[2] / \
           div[1] / div / div / div[1] / a / h3"
+
