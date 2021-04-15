@@ -18,6 +18,11 @@ from typing import List
 from webdriver_manager.chrome import ChromeDriverManager
 
 
+def getdata(url):
+    r = requests.get(url)
+    return r.text
+
+
 def fetch_movie_reviews(review_title: str) -> dict:
     """
     Return a dictionary, where the key is the title of the review and the value
@@ -42,7 +47,8 @@ def fetch_movie_reviews(review_title: str) -> dict:
     time.sleep(1)
 
     # Click the link
-    browser.find_element_by_xpath("""/ html / body / div[7] / div / div[9] / div[1] / div / div[2] / div[2] / div / div / div[
+    browser.find_element_by_xpath("""/ html / body / div[7] / div / div[9] / div[1] / div / div[2] 
+    / div[2] / div / div / div[
         1] / div / div / div / div / div[1] / a / h3""").click()
     time.sleep(5)
 
@@ -87,55 +93,19 @@ def trailers(review_title: str):
     time.sleep(1)
 
     browser.find_element_by_xpath(
-        "/html/body/div[7]/div/div[9]/div[1]/div/div[2]/div[2]/div/div/div[1]/div/div[1]/div[1]/div[1]/div/div/div/div[2]/h3/a/h3"
+        "/html/body/div[7]/div/div[9]/div[1]/div/div[2]/div[2]/div/div/div[1]/div/div[1]/div["
+        "1]/div[1]/div/div/div/div[2]/h3/a/h3 "
         ).click()
     time.sleep(5)
     browser.find_element_by_xpath("//body").send_keys("f")
 
-import time
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.common.keys import Keys
 
-
-def fetch_image_urls(movie_title: List[str]) -> dict:
-    """
-    Return a dictionary, where the key is the title of the review and the value
-    is the corresponding image to the title. Takes in a list of titles and returns
-    the url for the images.
-    """
-    image_urls = set()
-    movie_dict = {}
-
-    options = Options()
-    options.add_argument("--headless")
-    browser = webdriver.Chrome(ChromeDriverManager().install(), options=options)
-
-    browser.get('https://www.google.com')
-
-    for movie in movie_title:
-        browser.find_element_by_name('q').send_keys(movie + " poster")
-        time.sleep(1)
-
-        browser.find_element_by_name("btnK").send_keys(Keys.ENTER)
-        time.sleep(1)
-
-        scroll_to_end(browser)
-
-        actual_images = browser.find_elements_by_css_selector('img.n3VNCb')
-        for actual_image in actual_images:
-            if actual_image.get_attribute('src') and 'http' in actual_image.get_attribute('src'):
-                image_urls.add(actual_image.get_attribute('src'))
-
-        for url in image_urls:
-            movie_dict[movie] = url
-
-    return movie_dict
-
-
-def scroll_to_end(wd) -> None:
-    """
-    ...
-    """
-    wd.execute_script("window.scrollTo(0, document.body.scrollHeight);")
-    time.sleep(1)
+def get_images(movies: List[str]) -> List:
+    lst = []
+    for movie in movies:
+        movie_url = movie.replace(" ", "+")
+        data_html = getdata("https://www.movieposterdb.com/search?category=title&q="+ movie_url)
+        all_html_parsing = BeautifulSoup(data_html, 'html.parser')
+        image_html_info = all_html_parsing.find_all('img')
+        lst = [image_html_info[2]['src']]
+    return lst
