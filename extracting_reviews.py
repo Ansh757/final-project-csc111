@@ -86,10 +86,8 @@ def trailers(review_title: str):
     time.sleep(1)
 
     browser.find_element_by_xpath(
-        """// *[ @ id = "rso"] / div[2] / div[1] / div / div[1] / a[1] / h3"""
+        "/ html / body / div[7] / div / div[9] / div[1] / div / div[2] / div[2] / div / div / div[2] / \
+      div[1] / div / div / div[1] / a / h3"
         ).click()
     time.sleep(5)
-
-    "/ html / body / div[7] / div / div[9] / div[1] / div / div[2] / div[2] / div / div / div[2] / \
-          div[1] / div / div / div[1] / a / h3"
 

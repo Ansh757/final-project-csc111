@@ -47,7 +47,7 @@ def show_popup():
     popup_window.open()
 
 def show_trailer():
-    trailers('quo vadis aida')
+    trailers('Romeo and Julliet')
 
 if __name__ == '__main__':
     MyApp().run()
