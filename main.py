@@ -162,6 +162,19 @@ def visualize_graph(graph: Graph,
         fig.write_image(output_file)
 
 
+def multiple_graphs(limit: int) -> None:
+    """Return up to <limit> Graphs
+
+    Preconditions:
+        - 1 <= limit <= 11
+    """
+    file_num = 1
+    for _ in range(limit):
+        name = 'portion'
+        visualize_graph(load_graph(name + str(file_num) + '.csv'))
+        file_num += 1
+
+
 def user_prompts(genre: Optional[list[str]] = None, year: Optional[tuple[int, int]] = None,
                  director: Optional[str] = None, language: Optional[str] = None,
                  country: Optional[str] = None) -> str:

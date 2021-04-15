@@ -9,6 +9,7 @@ This file is Copyright (c) 2021 Ansh Malhotra, Armaan Mann, Leya Abubaker
 """
 from __future__ import annotations
 from typing import Any, Union
+import csv
 import networkx as nx
 import pandas as pd
 
@@ -98,7 +99,7 @@ class Graph:
         return {v.item for v in self._vertices.values()}
 
     def add_vertex(self, item: Any, kind: set[str]) -> None:
-        """Add a vertex with the given item and set of kind to this graph.
+        """Add a vertex with the given item and set of genres to this graph.
 
         The new vertex is not adjacent to any other vertices.
 
@@ -175,9 +176,8 @@ class Graph:
         return weight
 
     def movie_recs(self, n: int, movie: str, threshold: float = 0.0) -> list[str]:
-        """
-        Return a list of up to <n> recommended movies based on similarity to the given book,
-            with the given threshold and the movie name.
+        """Return a list of up to <n> recommended movies based on similarity to the given book,
+        with the given threshold and the movie name.
 
         Preconditions:
             - self in self._vertices
@@ -269,3 +269,16 @@ def chunking(file_name: str) -> None:
     for size in pd.read_csv(file_name, chunksize=size_per_file):
         size.to_csv("portion" + str(file_number) + '.csv', index=False)
         file_number += 1
+
+
+if __name__ == '__main__':
+    import python_ta.contracts
+    python_ta.contracts.check_all_contracts()
+    import python_ta
+    python_ta.check_all(config={
+        'max-line-length': 1000,
+        'disable': ['E1136', 'R0914'],
+        'extra-imports': ['csv', 'networkx', 'pandas'],
+        'allowed-io': ['movie_info'],
+        'max-nested-blocks': 4
+    })
