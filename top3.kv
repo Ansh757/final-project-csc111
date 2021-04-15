@@ -2,22 +2,25 @@
     GridLayout:
         rows:4
         size: root.width, root.height
-        Image:
-            source:"title_image.jpg"
+
+        Button:
+            background_normal:"title_image.jpg"
+
         GridLayout:
             rows:1
 
             Button:
+                id: my_movie1
                 on_release: root.btn()
-                background_normal: "download.jpg"
+
 
             Button:
+                id: my_movie2
                 on_release: root.btn2()
-                background_normal: "download1.jpg"
 
             Button:
+                id: my_movie3
                 on_release: root.btn3()
-                background_normal: "download 2.jpg"
 
 
 <P>:

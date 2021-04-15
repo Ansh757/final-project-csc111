@@ -20,6 +20,7 @@ class MyGrid(Widget):
     """
 
     def btn(self):
+
         show_popup()
 
     def btn2(self):
@@ -27,6 +28,10 @@ class MyGrid(Widget):
 
     def btn3(self):
         show_popup3()
+    #
+    # def image_appear(self):
+    #     self.ids.my_movie1.source = ""
+
 
 
 class P(FloatLayout):
@@ -38,10 +43,6 @@ class P(FloatLayout):
 
     def review1(self):
         reviews_1()
-
-
-
-
 
 
 class P2(FloatLayout):
@@ -136,6 +137,9 @@ def reviews_2():
 
 def reviews_3():
     print("Reviews for movie 3")
+
+def show_image():
+    return "'http://mysite.com/test.png'"
 
 
 if __name__ == '__main__':

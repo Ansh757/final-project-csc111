@@ -14,6 +14,7 @@ from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.keys import Keys
+from typing import List
 from webdriver_manager.chrome import ChromeDriverManager
 
 
@@ -91,4 +92,50 @@ def trailers(review_title: str):
     time.sleep(5)
     browser.find_element_by_xpath("//body").send_keys("f")
 
+import time
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.keys import Keys
 
+
+def fetch_image_urls(movie_title: List[str]) -> dict:
+    """
+    Return a dictionary, where the key is the title of the review and the value
+    is the corresponding image to the title. Takes in a list of titles and returns
+    the url for the images.
+    """
+    image_urls = set()
+    movie_dict = {}
+
+    options = Options()
+    options.add_argument("--headless")
+    browser = webdriver.Chrome(ChromeDriverManager().install(), options=options)
+
+    browser.get('https://www.google.com')
+
+    for movie in movie_title:
+        browser.find_element_by_name('q').send_keys(movie + " poster")
+        time.sleep(1)
+
+        browser.find_element_by_name("btnK").send_keys(Keys.ENTER)
+        time.sleep(1)
+
+        scroll_to_end(browser)
+
+        actual_images = browser.find_elements_by_css_selector('img.n3VNCb')
+        for actual_image in actual_images:
+            if actual_image.get_attribute('src') and 'http' in actual_image.get_attribute('src'):
+                image_urls.add(actual_image.get_attribute('src'))
+
+        for url in image_urls:
+            movie_dict[movie] = url
+
+    return movie_dict
+
+
+def scroll_to_end(wd) -> None:
+    """
+    ...
+    """
+    wd.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+    time.sleep(1)
