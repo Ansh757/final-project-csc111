@@ -191,7 +191,7 @@ def user_prompts(genre: Optional[list[str]] = None, year: Optional[tuple[int, in
     >>> user_prompts(genre=['Comedy'])
     >>> "The Hitman's Bodyguard"
     """
-    g = filtered_graph('imdb_dataset.csv', genre=genre, year=year, director=director,
+    g = filtered_graph('portions/portion1.csv', genre=genre, year=year, director=director,
                        language=language, country=country)
     movie_title = input("What is a movie you like?")
     while movie_title not in g.get_all_vertices():
@@ -201,8 +201,8 @@ def user_prompts(genre: Optional[list[str]] = None, year: Optional[tuple[int, in
 
 
 if __name__ == '__main__':
-    import python_ta.contracts
-    python_ta.contracts.check_all_contracts()
+    # import python_ta.contracts
+    # python_ta.contracts.check_all_contracts()
     import doctest
     doctest.testmod()
 
