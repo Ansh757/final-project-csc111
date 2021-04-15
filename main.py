@@ -199,6 +199,35 @@ def user_prompts(portion_file: str) -> str:
         print("Invalid selection. Please choose another movie")
 
 
+def _load_graph(portion_file):
+    return main.load_graph(portion_file)
+
+
+def user_prompts(portion_file: str) -> str:
+    """
+    Creates a prompt for the user to pick a preferred movie based on filtered information
+
+    Precondition:
+        - input movie must be in imdb dataset
+    """
+    # g = filtered_graph('portions/portion1.csv', genre=genre, year=year, director=director,
+    #                    language=language, country=country)
+    g = _load_graph(portion_file)
+
+    for _ in range(len(g.get_all_vertices())):
+        movie_title = input("What is a movie you like?")
+        if movie_title in g.get_all_vertices():
+            return movie_title
+        print("Invalid selection. Please choose another movie")
+
+
+def get_portion_file(file: str) -> list[str]:
+    """..."""
+    new_graph = _load_graph(file)
+    get_movies = new_graph.movie_recs(main.user_prompts(file))
+    return get_movies
+
+
 if __name__ == '__main__':
     # import python_ta.contracts
     # python_ta.contracts.check_all_contracts()

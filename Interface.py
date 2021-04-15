@@ -14,9 +14,37 @@ from kivy.uix.popup import Popup
 from extracting_reviews import trailers, get_images
 import graph_vertex
 import main
+#
+#
+# def _load_graph(portion_file):
+#     return main.load_graph(portion_file)
+#
+#
+# def user_prompts(portion_file: str) -> str:
+#     """
+#     Creates a prompt for the user to pick a preferred movie based on filtered information
+#
+#     Precondition:
+#         - input movie must be in imdb dataset
+#     """
+#     # g = filtered_graph('portions/portion1.csv', genre=genre, year=year, director=director,
+#     #                    language=language, country=country)
+#     g = _load_graph(portion_file)
+#
+#     for _ in range(len(g.get_all_vertices())):
+#         movie_title = input("What is a movie you like?")
+#         if movie_title in g.get_all_vertices():
+#             return movie_title
+#         print("Invalid selection. Please choose another movie")
+#
+#
+# def get_portion_file(file: str) -> list[str]:
+#     """..."""
+#     new_graph = _load_graph(file)
+#     get_movies = new_graph.movie_recs(main.user_prompts(file))
+#     return get_movies
 
-
-get_photo = graph_vertex.Graph.movie_recs(main.)
+x = input("Enter")
 class MyGrid(Widget):
     """
     ...
@@ -33,9 +61,8 @@ class MyGrid(Widget):
 
     #
     def image_appear(self):
-        self.ids.my_image1.source = "https://www.technobuffalo.com/sites/technobuffalo.com" \
-                                    "/files/styles/large/public/wp/2017/05/wonder-woman-lifts-" \
-                                    "tank-in-reald3d-poster.jpg"
+        self.ids.my_image1.source = "https://cdn.pastemagazine.com/www/system/images/photo_albums" \
+                                    "/best-movie-posters-2016/large/moonlight-ver2-xlg.jpg"
 
         self.ids.my_image2.source = "https://cdn.pastemagazine.com/www/system/images/photo_albums" \
                                     "/best-movie-posters-2016/large/moonlight-ver2-xlg.jpg"
