@@ -5,6 +5,7 @@
 
         Button:
             background_normal:"title_image.jpg"
+            on_press: root.image_appear()
 
         GridLayout:
             rows:1
@@ -12,15 +13,26 @@
             Button:
                 id: my_movie1
                 on_release: root.btn()
+                AsyncImage:
+                    id:my_image1
+                    source: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fthestayathomechef.com%2Fwp-content%2Fuploads%2F2019%2F01%2FOatmeal-Pancakes-3.jpg"
 
 
             Button:
                 id: my_movie2
                 on_release: root.btn2()
+                AsyncImage:
+                    id:my_image2
+                    source: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fthestayathomechef.com%2Fwp-content%2Fuploads%2F2019%2F01%2FOatmeal-Pancakes-3.jpg"
+
 
             Button:
                 id: my_movie3
                 on_release: root.btn3()
+                AsyncImage:
+                    id:my_image3
+                    source: "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fthestayathomechef.com%2Fwp-content%2Fuploads%2F2019%2F01%2FOatmeal-Pancakes-3.jpg"
+
 
 
 <P>:
