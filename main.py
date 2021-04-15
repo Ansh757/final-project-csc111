@@ -83,7 +83,7 @@ def load_graph(imdb_file: str) -> Graph:
     new_graph = Graph()
     new_dict = {}
 
-    with open(imdb_file) as f1:
+    with open(imdb_file, encoding="utf8") as f1:
         reader1 = csv.reader(f1)
         next(reader1)
 

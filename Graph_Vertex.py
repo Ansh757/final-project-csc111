@@ -10,6 +10,7 @@ This file is Copyright (c) 2021 Ansh Malhotra, Armaan Mann, Leya Abubaker
 from __future__ import annotations
 from typing import Any, Union
 import networkx as nx
+import pandas as pd
 
 
 ################################################################################
@@ -223,3 +224,20 @@ class Graph:
                 break
 
         return graph_nx
+
+
+####################################################################################################
+# This function was used for chunking purposes
+# DON'T RUN THIS FUNCTION
+####################################################################################################
+def chunking(file_name: str) -> None:
+    """Mutates the current directory csv file into chunks of 9537 rows.
+
+    Note: We already did this and created a portion folder!
+    """
+    size_per_file = 9537
+    file_number = 1
+
+    for size in pd.read_csv(file_name, chunksize=size_per_file):
+        size.to_csv("portion" + str(file_number) + '.csv', index=False)
+        file_number += 1
