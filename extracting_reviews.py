@@ -14,7 +14,8 @@ from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.keys import Keys
-import pprint
+from webdriver_manager.chrome import ChromeDriverManager
+
 
 def fetch_movie_reviews(review_title: str) -> dict:
     """
@@ -26,9 +27,7 @@ def fetch_movie_reviews(review_title: str) -> dict:
     # First we need to set up the browser
     options = Options()
     options.add_argument("--headless")
-    browser = webdriver.Chrome(
-        executable_path=r'C:\Users\Armaa\Music\UOFT CSC111\csc111\chromedriver.exe',
-        options=options)
+    browser = webdriver.Chrome(ChromeDriverManager().install(), options=options)
 
     # Go to google the Browser
     browser.get('https://www.google.com')
@@ -76,9 +75,7 @@ def fetch_movie_reviews(review_title: str) -> dict:
 def trailers(review_title: str):
     """..."""
 
-    browser = webdriver.Chrome(
-        executable_path=r'C:\Users\Armaa\Music\UOFT CSC111\csc111\chromedriver.exe')
-
+    browser = webdriver.Chrome(ChromeDriverManager().install())
     browser.get('https://www.google.com')
 
     browser.find_element_by_name('q').send_keys(review_title + " trailer")
@@ -88,5 +85,9 @@ def trailers(review_title: str):
     time.sleep(1)
 
     browser.find_element_by_xpath(
-        """// *[ @ id = "rso"] / div[2] / div[1] / div / div[1] / a[1] / h3""").click()
+        """// *[ @ id = "rso"] / div[2] / div[1] / div / div[1] / a[1] / h3"""
+        ).click()
     time.sleep(5)
+
+    "/ html / body / div[7] / div / div[9] / div[1] / div / div[2] / div[2] / div / div / div[2] / \
+          div[1] / div / div / div[1] / a / h3"
