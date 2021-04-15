@@ -11,7 +11,7 @@ from kivy.uix.widget import Widget
 from kivy.core.window import Window
 from kivy.config import Config
 from kivy.uix.popup import Popup
-from extracting_reviews import trailers
+from extracting_reviews import trailers, get_images
 
 
 class MyGrid(Widget):
