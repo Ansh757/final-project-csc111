@@ -20,7 +20,6 @@ class MyGrid(Widget):
     """
 
     def btn(self):
-
         show_popup()
 
     def btn2(self):
@@ -28,11 +27,19 @@ class MyGrid(Widget):
 
     def btn3(self):
         show_popup3()
+
     #
     def image_appear(self):
-        self.ids.my_image1.source = "https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F44%2F2016%2F06%2F03%2F3755319.jpg"
-        self.ids.my_image2.source = "https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F44%2F2016%2F06%2F03%2F3755319.jpg"
-        self.ids.my_image3.source = "https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F44%2F2016%2F06%2F03%2F3755319.jpg"
+        self.ids.my_image1.source = "https://www.technobuffalo.com/sites/technobuffalo.com" \
+                                    "/files/styles/large/public/wp/2017/05/wonder-woman-lifts-" \
+                                    "tank-in-reald3d-poster.jpg"
+
+        self.ids.my_image2.source = "https://cdn.pastemagazine.com/www/system/images/photo_albums" \
+                                    "/best-movie-posters-2016/large/moonlight-ver2-xlg.jpg"
+
+        self.ids.my_image3.source = "https://external-content.duckduckgo.com" \
+                                    "/iu/?u=http%3A%2F%2Fcdn.collider.com%2Fwp-content%2" \
+                                    "Fuploads%2F2019%2F04%2Fthriller-netflix-movie-poster.png "
 
 
 class P(FloatLayout):
@@ -138,6 +145,7 @@ def reviews_2():
 
 def reviews_3():
     print("Reviews for movie 3")
+
 
 def show_image():
     return "'http://mysite.com/test.png'"
