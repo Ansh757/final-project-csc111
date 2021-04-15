@@ -18,7 +18,7 @@
             Button:
                 on_release: root.btn3()
                 background_normal: "download 2.jpg"
-                border:(10,10,10,10)
+
 
 <P>:
     Button:
@@ -26,6 +26,18 @@
         on_release: root.ytube()
         size_hint: 0.8, 0.1
         pos_hint:{"x":0.1, "y":0.8}
+    Button:
+        text: "Click Here For the Description"
+        on_press: root.text1()
+        size_hint: 0.85, 0.1
+        pos_hint: {"x":0.1, "y": 0.5}
+    Button:
+        text: "Click Here For the Reviews"
+        on_press: root.review1()
+        size_hint: 0.8, 0.1
+        pos_hint: {"x":0.1, "y": 0.2}
+
+
 
 <P2>:
     Button:
@@ -33,6 +45,16 @@
         on_release: root.ytube2()
         size_hint: 0.8, 0.1
         pos_hint:{"x":0.1, "y":0.8}
+    Button:
+        text: "Click Here For the Description"
+        on_press: root.text2()
+        size_hint: 0.85, 0.1
+        pos_hint: {"x":0.1, "y": 0.5}
+    Button:
+        text: "Click Here For the Reviews"
+        on_press: root.review2()
+        size_hint: 0.8, 0.1
+        pos_hint: {"x":0.1, "y": 0.2}
 
 <P3>:
     Button:
@@ -40,3 +62,15 @@
         on_release: root.ytube3()
         size_hint: 0.8, 0.1
         pos_hint:{"x":0.1, "y":0.8}
+
+    Button:
+        text: "Click Here For the Description"
+        on_press: root.text3()
+        size_hint: 0.85, 0.1
+        pos_hint: {"x":0.1, "y": 0.5}
+
+    Button:
+        text: "Click Here For the Reviews"
+        on_press: root.review3()
+        size_hint: 0.8, 0.1
+        pos_hint: {"x":0.1, "y": 0.2}
