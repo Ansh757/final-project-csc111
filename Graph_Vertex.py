@@ -174,14 +174,15 @@ class Graph:
         weight = v1.calculate_weight(v2)
         return weight
 
-    def movie_recs(self, threshold: float, limit: int, movie: str) -> list[str]:
-        """Return a list of up to <limit> recommended movies based on similarity to the given book,
+    def movie_recs(self, n: int, movie: str, threshold: float = 0.0) -> list[str]:
+        """
+        Return a list of up to <n> recommended movies based on similarity to the given book,
             with the given threshold and the movie name.
 
         Preconditions:
             - self in self._vertices
             - any(movie == title.item for title in self._vertices)
-            - limit >= 1
+            - n >= 1
             - threshold > 0.0
         """
         movies_so_far = []
@@ -192,7 +193,7 @@ class Graph:
         for v2 in lst_books:
             name_and_score[v2] = self.get_similarity_score(v1, v2)
 
-        while len(movies_so_far) < limit and name_and_score != {}:
+        while len(movies_so_far) < n and name_and_score != {}:
             max_book_score = max(name_and_score, key=name_and_score.get)
             score_of_book = name_and_score.pop(max_book_score)
             if (max_book_score != movie) and (score_of_book > threshold) and (
@@ -200,6 +201,33 @@ class Graph:
                 movies_so_far.append(max_book_score)
 
         return movies_so_far
+
+    def movie_info(self, imdb_file: str, item: Any) -> dict[Any]:
+        """
+        ...
+        """
+        v = self._vertices[item]
+
+        with open(imdb_file) as csv_file:
+            reader = csv.reader(csv_file)
+            next(reader)
+
+            for row in reader:
+                if row[1] == item:
+                    genre = v.genres
+                    title = row[1]
+                    director = row[9]
+                    language = row[8]
+                    country = row[7]
+                    year = row[3]
+                    description = row[13]
+                    actors = row[12]
+                    break
+
+        d = {'title': title, 'director': director, 'language': language,
+             'country': country, 'actors': actors, 'genre': genre, 'year': year,
+             'description': description}
+        return d
 
     def to_networkx(self, max_vertices: int = 5000) -> nx.Graph:
         """Convert this graph into a networkx Graph.

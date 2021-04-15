@@ -160,3 +160,26 @@ def visualize_graph(graph: Graph,
         fig.show()
     else:
         fig.write_image(output_file)
+
+
+def user_prompts(genre: Optional[list[str]] = None, year: Optional[tuple[int, int]] = None,
+                 director: Optional[str] = None, language: Optional[str] = None,
+                 country: Optional[str] = None) -> str:
+    """
+    Creates a prompt for the user to pick a preferred movie based on filtered information
+
+    Precondition:
+        - input movie must be in imdb dataset
+
+    >>> user_prompts(genre=['Action'])
+    >>> "Bloodshot"
+    >>> user_prompts(genre=['Comedy'])
+    >>> "The Hitman's Bodyguard"
+    """
+    g = filtered_graph('imdb_dataset.csv', genre=genre, year=year, director=director,
+                       language=language, country=country)
+    movie_title = input("What is a movie you like?")
+    while movie_title not in g.get_all_vertices():
+        print("Invalid selection. Please choose another movie")
+
+    return movie_title
