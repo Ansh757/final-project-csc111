@@ -8,13 +8,14 @@ By: Ansh Malhotra, Armaan Mann, Leya Abubaker
 This file is Copyright (c) 2021 Ansh Malhotra, Armaan Mann, Leya Abubaker
 """
 from __future__ import annotations
-from typing import Any, Union
+from typing import Any, Union, Optional
 import csv
 import networkx as nx
 import pandas as pd
 
 
-# LIST_OF_RECS = []
+LIST_OF_RECS = []
+
 
 ################################################################################
 # _Vertex Class
@@ -177,7 +178,8 @@ class Graph:
         weight = v1.calculate_weight(v2)
         return weight
 
-    def movie_recs(self, n: int, movie: str, threshold: float) -> list[str]:
+    def movie_recs(self, movie: str, threshold: Optional[float] = 0.0,
+                   n: Optional[int] = 3) -> list[str]:
         """Return a list of up to <n> recommended movies based on similarity to the given book,
         with the given threshold and the movie name.
 
