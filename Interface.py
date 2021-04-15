@@ -12,8 +12,11 @@ from kivy.core.window import Window
 from kivy.config import Config
 from kivy.uix.popup import Popup
 from extracting_reviews import trailers, get_images
+import graph_vertex
+import main
 
 
+get_photo = graph_vertex.Graph.movie_recs(main.)
 class MyGrid(Widget):
     """
     ...

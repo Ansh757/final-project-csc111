@@ -14,8 +14,6 @@ import networkx as nx
 import pandas as pd
 
 
-LIST_OF_RECS = []
-
 
 ################################################################################
 # _Vertex Class

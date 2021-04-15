@@ -42,7 +42,7 @@ def filtered_graph(imdb_file: str, genre: list[str], year: tuple[int, int],
     new_graph = Graph()
     new_dict = {}
 
-    with open(imdb_file) as csv_file:
+    with open(imdb_file, encoding="utf8") as csv_file:
         reader = csv.reader(csv_file)
         next(reader)
         for row in reader:
@@ -177,27 +177,26 @@ def multiple_graphs(limit: int) -> None:
         file_num += 1
 
 
-def user_prompts(genre: Optional[list[str]] = None, year: Optional[tuple[int, int]] = None,
-                 director: Optional[str] = None, language: Optional[str] = None,
-                 country: Optional[str] = None) -> str:
+###################################################################################################
+# For the GUI
+####################################################################################################
+# TODO DOCSTRING
+def user_prompts(portion_file: str) -> str:
     """
     Creates a prompt for the user to pick a preferred movie based on filtered information
 
     Precondition:
         - input movie must be in imdb dataset
-
-    >>> user_prompts(genre=['Action'])
-    >>> "Bloodshot"
-    >>> user_prompts(genre=['Comedy'])
-    >>> "The Hitman's Bodyguard"
     """
-    g = filtered_graph('portions/portion1.csv', genre=genre, year=year, director=director,
-                       language=language, country=country)
-    movie_title = input("What is a movie you like?")
-    while movie_title not in g.get_all_vertices():
-        print("Invalid selection. Please choose another movie")
+    # g = filtered_graph('portions/portion1.csv', genre=genre, year=year, director=director,
+    #                    language=language, country=country)
+    g = load_graph(portion_file)
 
-    return movie_title
+    for _ in range(len(g.get_all_vertices())):
+        movie_title = input("What is a movie you like?")
+        if movie_title in g.get_all_vertices():
+            return movie_title
+        print("Invalid selection. Please choose another movie")
 
 
 if __name__ == '__main__':
@@ -205,4 +204,3 @@ if __name__ == '__main__':
     # python_ta.contracts.check_all_contracts()
     import doctest
     doctest.testmod()
-
