@@ -1,7 +1,9 @@
 """
 Final Project Title: IMDB Recommendation System
 
-Objective: ...
+Objective: The main file which the TA will be running. The purpose of this file
+is to run the functions for the visualizations to view the graphs and using the GUI to view the top
+recommendations
 
 By: Ansh Malhotra, Armaan Mann, Leya Abubaker
 
@@ -12,7 +14,7 @@ import csv
 from typing import Optional
 import networkx as nx
 from plotly.graph_objs import Scatter, Figure
-from Graph_Vertex import Graph
+from graph_vertex import Graph
 
 LINE_COLOUR = 'rgb(210,210,210)'
 VERTEX_BORDER_COLOUR = 'rgb(50, 50, 50)'
@@ -27,14 +29,14 @@ def filtered_graph(imdb_file: str, genre: list[str], year: tuple[int, int],
 
     If a filter is not chosen the key-value pair will have a None type..
 
-    The data set must be chosen from the data folder, you may choose any small, medium, large
+    The data set must be chosen from the portion folder, you may choose any of the portion csv files
     to visualize the graph.
 
     Refer to the dataset for specific languages, countries and directors available.
 
     Preconditions:
         - imdb_file is the path to a CSV file corresponding to the IMDB movies dataset
-          given as "data/small_dataset.csv"
+          given as "portions/portion1.csv"
         - The given filter should be in the form of language="English" or country="USA".
     """
     new_graph = Graph()
@@ -73,12 +75,12 @@ def filtered_graph(imdb_file: str, genre: list[str], year: tuple[int, int],
 def load_graph(imdb_file: str) -> Graph:
     """Return a movies review graph corresponding to the given IMBD dataset.
 
-    The data set must be chosen from the data folder, you may choose any small, medium, large
+    The data set must be chosen from the portion folder, you may choose any of the portion csv files
     to visualize the graph.
 
     Preconditions:
         - imdb_file is the path to a CSV file corresponding to the IMDB movies dataset
-          given as "data/small_dataset.csv"
+          given as "portions/portion1.csv"
     """
     new_graph = Graph()
     new_dict = {}
@@ -162,6 +164,19 @@ def visualize_graph(graph: Graph,
         fig.write_image(output_file)
 
 
+def multiple_graphs(limit: int) -> None:
+    """Return up to <limit> Graphs
+
+    Preconditions:
+        - 1 <= limit <= 11
+    """
+    file_num = 1
+    for _ in range(limit):
+        name = 'portion'
+        visualize_graph(load_graph(name + str(file_num) + '.csv'))
+        file_num += 1
+
+
 def user_prompts(genre: Optional[list[str]] = None, year: Optional[tuple[int, int]] = None,
                  director: Optional[str] = None, language: Optional[str] = None,
                  country: Optional[str] = None) -> str:
@@ -183,3 +198,11 @@ def user_prompts(genre: Optional[list[str]] = None, year: Optional[tuple[int, in
         print("Invalid selection. Please choose another movie")
 
     return movie_title
+
+
+if __name__ == '__main__':
+    import python_ta.contracts
+    python_ta.contracts.check_all_contracts()
+    import doctest
+    doctest.testmod()
+

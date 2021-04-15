@@ -8,9 +8,13 @@ By: Ansh Malhotra, Armaan Mann, Leya Abubaker
 This file is Copyright (c) 2021 Ansh Malhotra, Armaan Mann, Leya Abubaker
 """
 from __future__ import annotations
-from typing import Any, Union
+from typing import Any, Union, Optional
+import csv
 import networkx as nx
 import pandas as pd
+
+
+LIST_OF_RECS = []
 
 
 ################################################################################
@@ -37,13 +41,13 @@ class _Vertex:
     genres: set[str]
     neighbours: set[_Vertex]
 
-    def __init__(self, item: Any, kind: set[str]) -> None:
-        """Initialize a new vertex with the given item and kind.
+    def __init__(self, item: Any, genres: set[str]) -> None:
+        """Initialize a new vertex with the given item and genres.
 
         This vertex is initialized with no neighbours.
         """
         self.item = item
-        self.genres = kind
+        self.genres = genres
         self.neighbours = set()
 
     def degree(self) -> int:
@@ -97,8 +101,8 @@ class Graph:
         """
         return {v.item for v in self._vertices.values()}
 
-    def add_vertex(self, item: Any, kind: set[str]) -> None:
-        """Add a vertex with the given item and set of kind to this graph.
+    def add_vertex(self, item: Any, genres: set[str]) -> None:
+        """Add a vertex with the given item and set of genres to this graph.
 
         The new vertex is not adjacent to any other vertices.
 
@@ -106,7 +110,7 @@ class Graph:
             - self not in self._vertices
         """
         if item not in self._vertices:
-            self._vertices[item] = _Vertex(item, kind)
+            self._vertices[item] = _Vertex(item, genres)
 
     def add_edge(self, item1: Any, item2: Any) -> None:
         """Add an edge between the two vertices with the given items in this graph.
@@ -174,22 +178,23 @@ class Graph:
         weight = v1.calculate_weight(v2)
         return weight
 
-    def movie_recs(self, n: int, movie: str, threshold: float = 0.0) -> list[str]:
-        """
-        Return a list of up to <n> recommended movies based on similarity to the given book,
-            with the given threshold and the movie name.
+    def movie_recs(self, movie: str, threshold: Optional[float] = 0.0,
+                   n: Optional[int] = 3) -> list[str]:
+        """Return a list of up to <n> recommended movies based on similarity to the given book,
+        with the given threshold and the movie name.
 
         Preconditions:
             - self in self._vertices
             - any(movie == title.item for title in self._vertices)
             - n >= 1
-            - threshold > 0.0
+            - 0.0 <= threshold < 1.0
         """
         movies_so_far = []
         name_and_score = {}
         v1 = self._vertices.get(movie).item
 
         lst_books = sorted(self.get_all_vertices(), reverse=True)
+
         for v2 in lst_books:
             name_and_score[v2] = self.get_similarity_score(v1, v2)
 
@@ -234,8 +239,6 @@ class Graph:
 
         max_vertices specifies the maximum number of vertices that can appear in the graph.
         (This is necessary to limit the visualization output for large graphs.)
-
-        Note that this method is provided for you, and you shouldn't change it.
         """
         graph_nx = nx.Graph()
         for v in self._vertices.values():
@@ -269,3 +272,16 @@ def chunking(file_name: str) -> None:
     for size in pd.read_csv(file_name, chunksize=size_per_file):
         size.to_csv("portion" + str(file_number) + '.csv', index=False)
         file_number += 1
+
+
+if __name__ == '__main__':
+    import python_ta.contracts
+    # python_ta.contracts.check_all_contracts()
+    import python_ta
+    # python_ta.check_all(config={
+    #     'max-line-length': 1000,
+    #     'disable': ['E1136', 'R0914'],
+    #     'extra-imports': ['csv', 'networkx', 'pandas'],
+    #     'allowed-io': ['movie_info'],
+    #     'max-nested-blocks': 4
+    # })
