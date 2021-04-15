@@ -29,9 +29,10 @@ class MyGrid(Widget):
     def btn3(self):
         show_popup3()
     #
-    # def image_appear(self):
-    #     self.ids.my_movie1.source = ""
-
+    def image_appear(self):
+        self.ids.my_image1.source = "https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F44%2F2016%2F06%2F03%2F3755319.jpg"
+        self.ids.my_image2.source = "https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F44%2F2016%2F06%2F03%2F3755319.jpg"
+        self.ids.my_image3.source = "https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F44%2F2016%2F06%2F03%2F3755319.jpg"
 
 
 class P(FloatLayout):
