@@ -12,22 +12,31 @@
                 background_normal: "download.jpg"
 
             Button:
-                on_release: root.btn()
+                on_release: root.btn2()
                 background_normal: "download1.jpg"
 
             Button:
-                on_release: root.btn()
+                on_release: root.btn3()
                 background_normal: "download 2.jpg"
                 border:(10,10,10,10)
 
 <P>:
-    Label:
-        text: "You Pressed the Button"
-        size_hint: 0.6, 0.2
-        pos_hint:{"x":0.1, "y":0.1}
-
     Button:
-        text: "Idk Something Goes here I Guess"
+        text: "Click to watch the Trailer"
         on_release: root.ytube()
-        size_hint: 0.8, 0.2
-        pos_hint:{"x":0.1, "y":0.1}
+        size_hint: 0.8, 0.1
+        pos_hint:{"x":0.1, "y":0.8}
+
+<P2>:
+    Button:
+        text: "Click to watch the Trailer"
+        on_release: root.ytube2()
+        size_hint: 0.8, 0.1
+        pos_hint:{"x":0.1, "y":0.8}
+
+<P3>:
+    Button:
+        text: "Click to watch the Trailer"
+        on_release: root.ytube3()
+        size_hint: 0.8, 0.1
+        pos_hint:{"x":0.1, "y":0.8}
