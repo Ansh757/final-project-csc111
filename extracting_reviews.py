@@ -110,7 +110,4 @@ def get_images(movie: str) -> str:
     all_html_parsing = BeautifulSoup(data_html, 'html.parser')
     image_html_info = all_html_parsing.find_all('img')
     lst = image_html_info[2]['src']
-    if lst == 'https://posters.movieposterdb.com/no-posters-yet':
-        raise FileNotFoundError
-    else:
-        return lst
+    return lst
