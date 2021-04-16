@@ -177,7 +177,7 @@ def load_graph(imdb_file: str) -> Graph:
             genres = [genre.strip() for genre in split_.split(",")]
             new_dict[row[2]] = set(genres)
 
-            new_graph.add_vertex(row[1], set(genres))
+            new_graph.add_vertex(row[2], set(genres))
 
         for title1 in new_dict:
             for title2 in new_dict:
