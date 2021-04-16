@@ -91,8 +91,8 @@ def visualize_graph(graph: Graph,
         fig.write_image(output_file)
 
 
-def filtered_graph(imdb_file: str, genre: list[str], year: tuple[int, int],
-                   director: Optional[str] = None, language: Optional[str] = None,
+def filtered_graph(imdb_file: str, genre: Optional[list[str]] = None,
+                   director: Optional[list[str]] = None, language: Optional[list[str]] = None,
                    country: Optional[str] = None) -> Graph:
     """Return a movies review graph corresponding to the filtered IMDB dataset.
 
@@ -105,9 +105,15 @@ def filtered_graph(imdb_file: str, genre: list[str], year: tuple[int, int],
     to that csv file.
 
     Optional arguments:
-        - director: the director to the corresponding movie title.
-        - language: the language that the movie is in for the corresponding movie title.
+        - genres: the list of genre(s).
+        - director: the director of a movie title
+        - language: the language that the movie is in.
         - country: the country in which the movie is made.
+
+    As an Example of the parameter should look like:
+
+    filtered_graph(imdb_file='portions/portion16.csv', genre=['Animation', 'Comedy', 'Fantasy']
+                ,language='Turkish', country='Turkey', director=None)
 
     Preconditions:
         - imdb_file is the path to a CSV file corresponding to the chunks of the IMDB dataset
@@ -123,17 +129,20 @@ def filtered_graph(imdb_file: str, genre: list[str], year: tuple[int, int],
         next(reader)
         for row in reader:
 
-            check1 = True if int(row[3]) in range(year[0], year[1] + 1) else False
-            check2 = True if country is None or row[7].casefold() == country.casefold() else False
-            check3 = True if language is None or row[8].casefold() == language.casefold() else False
-            check4 = True if director is None or row[9].casefold() == director.casefold() else False
+            check1 = True if country is None or row[7].casefold() == country.casefold() else False
+            check2 = True if language is None or row[8].casefold() == language.casefold() else False
+            check3 = True if director is None or row[9].casefold() == director.casefold() else False
 
-            check = [check1, check2, check3, check4]
+            check = [check1, check2, check3]
 
             genres = [g.strip() for g in row[5].split(",")]
-            for x in genres:
-                if x in genre:
-                    check.append(True)
+
+            if genres is None:
+                check.append(True)
+            else:
+                for x in genres:
+                    if x in genre:
+                        check.append(True)
 
             if all(check):
                 new_dict[row[1]] = set(genres)
@@ -180,6 +189,7 @@ def load_graph(imdb_file: str) -> Graph:
 
     return new_graph
 
+
 def multiple_graphs(limit: int) -> None:
     """Return up to <limit> Graphs
 
@@ -196,26 +206,8 @@ def multiple_graphs(limit: int) -> None:
 ###################################################################################################
 # For the GUI
 ####################################################################################################
-# TODO DOCSTRING
-# def user_prompts(portion_file: str) -> str:
-#     """
-#     Creates a prompt for the user to pick a preferred movie based on filtered information
-#
-#     Precondition:
-#         - input movie must be in imdb dataset
-#     """
-#     # g = filtered_graph('portions/portion1.csv', genre=genre, year=year, director=director,
-#     #                    language=language, country=country)
-#     g = load_graph(portion_file)
-#
-#     for _ in range(len(g.get_all_vertices())):
-#         movie_title = input("What is a movie you like?")
-#         if movie_title in g.get_all_vertices():
-#             return movie_title
-#         print("Invalid selection. Please choose another movie")
-
-
-def _load_graph(portion_file):
+def loading_graph(portion_file):
+    """Returns a loaded graph"""
     return load_graph(portion_file)
 
 
@@ -226,9 +218,7 @@ def user_prompts(portion_file: str) -> str:
     Precondition:
         - input movie must be in imdb dataset
     """
-    # g = filtered_graph('portions/portion1.csv', genre=genre, year=year, director=director,
-    #                    language=language, country=country)
-    g = _load_graph(portion_file)
+    g = load_graph(portion_file)
 
     for _ in range(len(g.get_all_vertices())):
         movie_title = input("What is a movie you like?")
@@ -239,7 +229,7 @@ def user_prompts(portion_file: str) -> str:
 
 def get_portion_file(file: str) -> List[str]:
     """..."""
-    new_graph = _load_graph(file)
+    new_graph = loading_graph(file)
     get_movies = new_graph.movie_recs(user_prompts(file))
     return get_movies
 
