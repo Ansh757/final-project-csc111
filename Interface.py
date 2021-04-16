@@ -3,7 +3,7 @@ from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.widget import Widget
 from kivy.core.window import Window
 from kivy.uix.popup import Popup
-from extracting_reviews import trailers, get_images, fetch_movie_reviews
+from extracting_reviews import trailers, get_images, fetch_movie_reviews, filtering
 from kivy.config import Config
 import main
 import pprint
@@ -42,11 +42,11 @@ class MyGrid(Widget):
         movie2 and movie3 to their respective movie poster
 
         """
-        self.ids.my_image3.source = get_images(movies[0])
+        self.ids.my_image3.source = filtering(movies[0])
 
-        self.ids.my_image2.source = get_images(movies[1])
+        self.ids.my_image2.source = filtering(movies[1])
 
-        self.ids.my_image1.source = get_images(movies[2])
+        self.ids.my_image1.source = filtering(movies[2])
 
 
 class P(FloatLayout):

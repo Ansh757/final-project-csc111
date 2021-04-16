@@ -176,7 +176,7 @@ class Graph:
         return weight
 
     def movie_recs(self, movie: str, threshold: Optional[float] = 0.0,
-                   n: Optional[int] = 3) -> list[str]:
+                   n: Optional[int] = 5) -> list[str]:
         """Return a list of up to <n> recommended movies based on similarity to the given book,
         with the given threshold and the movie name.
 
