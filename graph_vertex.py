@@ -205,31 +205,26 @@ class Graph:
 
         return movies_so_far
 
-    def movie_info(self, imdb_file: str, item: Any) -> dict[Any]:
+    def movie_info(self, imdb_file: str, item: list[str]) -> dict[Any]:
         """
-        ...
+        d is in the form of director, language, country, actor, genres, year, description
         """
-        v = self._vertices[item]
+        d = {}
 
         with open(imdb_file) as csv_file:
             reader = csv.reader(csv_file)
             next(reader)
 
             for row in reader:
-                if row[1] == item:
-                    genre = v.genres
-                    title = row[1]
-                    director = row[9]
-                    language = row[8]
-                    country = row[7]
-                    year = row[3]
-                    description = row[13]
-                    actors = row[12]
-                    break
 
-        d = {'title': title, 'director': director, 'language': language,
-             'country': country, 'actors': actors, 'genre': genre, 'year': year,
-             'description': description}
+                for num in range(len(item)):
+                    v = self._vertices[item[num]]
+
+                    if row[1] == v.item:
+                        d[row[1]] = [v.genres, row[9], row[8], row[7], row[3],
+                                     row[13], str(row[12])]
+                    if len(d) == 3:
+                        break
         return d
 
     def to_networkx(self, max_vertices: int = 5000) -> nx.Graph:
