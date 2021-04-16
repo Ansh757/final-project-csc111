@@ -45,6 +45,8 @@ import main
 #     return get_movies
 
 x = input("Enter")
+movies = main.get_portion_file(x)
+
 class MyGrid(Widget):
     """
     ...
@@ -59,18 +61,14 @@ class MyGrid(Widget):
     def btn3(self):
         show_popup3()
 
-    #
+
+
     def image_appear(self):
-        self.ids.my_image1.source = "https://cdn.pastemagazine.com/www/system/images/photo_albums" \
-                                    "/best-movie-posters-2016/large/moonlight-ver2-xlg.jpg"
+        self.ids.my_image1.source = get_images(movies[0])
 
-        self.ids.my_image2.source = "https://cdn.pastemagazine.com/www/system/images/photo_albums" \
-                                    "/best-movie-posters-2016/large/moonlight-ver2-xlg.jpg"
+        self.ids.my_image2.source = get_images(movies[1])
 
-        self.ids.my_image3.source = "https://external-content.duckduckgo.com" \
-                                    "/iu/?u=http%3A%2F%2Fcdn.collider.com%2Fwp-content%2" \
-                                    "Fuploads%2F2019%2F04%2Fthriller-netflix-movie-poster.png "
-
+        self.ids.my_image3.source = get_images(movies[2])
 
 class P(FloatLayout):
     def ytube(self):

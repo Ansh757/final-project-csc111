@@ -11,7 +11,7 @@ This file is Copyright (c) 2021 Ansh Malhotra, Armaan Mann, Leya Abubaker
 """
 from __future__ import annotations
 import csv
-from typing import Optional
+from typing import List, Optional
 import networkx as nx
 from plotly.graph_objs import Scatter, Figure
 from graph_vertex import Graph
@@ -181,26 +181,26 @@ def multiple_graphs(limit: int) -> None:
 # For the GUI
 ####################################################################################################
 # TODO DOCSTRING
-def user_prompts(portion_file: str) -> str:
-    """
-    Creates a prompt for the user to pick a preferred movie based on filtered information
-
-    Precondition:
-        - input movie must be in imdb dataset
-    """
-    # g = filtered_graph('portions/portion1.csv', genre=genre, year=year, director=director,
-    #                    language=language, country=country)
-    g = load_graph(portion_file)
-
-    for _ in range(len(g.get_all_vertices())):
-        movie_title = input("What is a movie you like?")
-        if movie_title in g.get_all_vertices():
-            return movie_title
-        print("Invalid selection. Please choose another movie")
+# def user_prompts(portion_file: str) -> str:
+#     """
+#     Creates a prompt for the user to pick a preferred movie based on filtered information
+#
+#     Precondition:
+#         - input movie must be in imdb dataset
+#     """
+#     # g = filtered_graph('portions/portion1.csv', genre=genre, year=year, director=director,
+#     #                    language=language, country=country)
+#     g = load_graph(portion_file)
+#
+#     for _ in range(len(g.get_all_vertices())):
+#         movie_title = input("What is a movie you like?")
+#         if movie_title in g.get_all_vertices():
+#             return movie_title
+#         print("Invalid selection. Please choose another movie")
 
 
 def _load_graph(portion_file):
-    return main.load_graph(portion_file)
+    return load_graph(portion_file)
 
 
 def user_prompts(portion_file: str) -> str:
@@ -221,10 +221,10 @@ def user_prompts(portion_file: str) -> str:
         print("Invalid selection. Please choose another movie")
 
 
-def get_portion_file(file: str) -> list[str]:
+def get_portion_file(file: str) -> List[str]:
     """..."""
     new_graph = _load_graph(file)
-    get_movies = new_graph.movie_recs(main.user_prompts(file))
+    get_movies = new_graph.movie_recs(user_prompts(file))
     return get_movies
 
 

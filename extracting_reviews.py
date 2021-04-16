@@ -95,17 +95,15 @@ def trailers(review_title: str):
     browser.find_element_by_xpath(
         "/html/body/div[7]/div/div[9]/div[1]/div/div[2]/div[2]/div/div/div[1]/div/div[1]/div["
         "1]/div[1]/div/div/div/div[2]/h3/a/h3 "
-        ).click()
+    ).click()
     time.sleep(5)
     browser.find_element_by_xpath("//body").send_keys("f")
 
 
-def get_images(movies: List[str]) -> List:
-    lst = []
-    for movie in movies:
-        movie_url = movie.replace(" ", "+")
-        data_html = getdata("https://www.movieposterdb.com/search?category=title&q="+ movie_url)
-        all_html_parsing = BeautifulSoup(data_html, 'html.parser')
-        image_html_info = all_html_parsing.find_all('img')
-        lst = [image_html_info[2]['src']]
+def get_images(movie: str) -> str:
+    movie_url = movie.replace(" ", "+")
+    data_html = getdata("https://www.movieposterdb.com/search?category=title&q=" + movie_url)
+    all_html_parsing = BeautifulSoup(data_html, 'html.parser')
+    image_html_info = all_html_parsing.find_all('img')
+    lst = image_html_info[2]['src']
     return lst
