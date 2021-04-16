@@ -105,33 +105,9 @@ def trailers(review_title: str):
 
 
 def get_images(movie: str) -> str:
-    """
-    """
     movie_url = movie.replace(" ", "+")
     data_html = getdata("https://www.movieposterdb.com/search?category=title&q=" + movie_url)
     all_html_parsing = BeautifulSoup(data_html, 'html.parser')
     image_html_info = all_html_parsing.find_all('img')
     lst = image_html_info[2]['src']
     return lst
-
-
-def filtering(movies: list[str]) -> list[str]:
-    """
-    ...
-    """
-    lst = []
-    # ["A", "B", "C", "D"]
-    for m in movies:
-        # movie_url = m.replace(" ", "+")
-        # data_html = getdata("https://www.movieposterdb.com/search?category=title&q=" + movie_url)
-        # all_html_parsing = BeautifulSoup(data_html, 'html.parser')
-        # image_html_info = all_html_parsing.find_all('img')
-        # pick = image_html_info[2]['src']
-
-        pick = get_images(m)
-        if pick != 'https://posters.movieposterdb.com/no-posters-yet':
-            lst.append(pick)
-        if len(lst) == 3:
-            break
-
-    return lst[0: 2]
