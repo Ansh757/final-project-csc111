@@ -31,9 +31,9 @@ def fetch_movie_reviews(review_title: str) -> dict:
     """
 
     # First we need to set up the browser
-    # options = Options()
-    # options.add_argument("--headless")
-    browser = webdriver.Chrome(ChromeDriverManager().install())
+    headless = Options()
+    headless.add_argument("--headless")
+    browser = webdriver.Chrome(ChromeDriverManager().install(), options=headless)
 
     # Go to google the Browser
     browser.get('https://www.google.com')
@@ -43,13 +43,13 @@ def fetch_movie_reviews(review_title: str) -> dict:
     time.sleep(1)
 
     # Click the google search button
-    browser.find_element_by_name("btnK").send_keys(Keys.ENTER)
+    browser.find_element_by_xpath("""/html/body/div[1]/div[3]/form/div[1]/div[1]/div[3]/center/input[1]
+    """).send_keys(Keys.ENTER)
     time.sleep(1)
 
     # Click the link
-    browser.find_element_by_xpath("""/ html / body / div[7] / div / div[9] / div[1] / div / div[2] 
-    / div[2] / div / div / div[
-        1] / div / div / div / div / div[1] / a / h3""").click()
+    browser.find_element_by_xpath("""/html/body/div[7]/div/div[9]/div[1]/div/div[2]/div[2]
+    /div/div/div/div[1]/div/div/div[1]/a/h3""").click()
     time.sleep(5)
 
     # Click the user reviews
@@ -84,17 +84,20 @@ def trailers(review_title: str):
     """..."""
 
     browser = webdriver.Chrome(ChromeDriverManager().install())
-    browser.get('https://www.google.com')
+    browser.get('https://www.youtube.com')
 
-    browser.find_element_by_name('q').send_keys(review_title + " trailer")
+    search_bar = browser.find_element_by_xpath('/html/body/ytd-app/div/div/ytd-masthead/div[3]/div[2]/'
+                                  'ytd-searchbox/form/div/div[1]/input')
     time.sleep(1)
 
-    browser.find_element_by_name("btnK").send_keys(Keys.ENTER)
+    search_bar.send_keys(review_title + " trailer")
+    search_bar.send_keys(Keys.ENTER)
     time.sleep(1)
 
     browser.find_element_by_xpath(
-        "/html/body/div[7]/div/div[9]/div[1]/div/div[2]/div[2]/div/div/div[1]/div/div[1]/div["
-        "1]/div[1]/div/div/div/div[2]/h3/a/h3 "
+        "/html/body/ytd-app/div/ytd-page-manager/ytd-search/div[1]/ytd-two-column-search-results-"
+        "renderer/div/ytd-section-list-renderer/div[2]/ytd-item-section-renderer/div[3]/"
+        "ytd-video-renderer[1]/div[1]/div/div[1]/div/h3/a/yt-formatted-string"
     ).click()
     time.sleep(5)
     browser.find_element_by_xpath("//body").send_keys("f")
