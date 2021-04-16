@@ -86,8 +86,9 @@ def trailers(review_title: str):
     browser = webdriver.Chrome(ChromeDriverManager().install())
     browser.get('https://www.youtube.com')
 
-    search_bar = browser.find_element_by_xpath('/html/body/ytd-app/div/div/ytd-masthead/div[3]/div[2]/'
-                                  'ytd-searchbox/form/div/div[1]/input')
+    search_bar = browser.find_element_by_xpath('/html/body/ytd-app/div/div/ytd-masthead/div['
+                                               '3]/div[2]/ '
+                                               'ytd-searchbox/form/div/div[1]/input')
     time.sleep(1)
 
     search_bar.send_keys(review_title + " trailer")
