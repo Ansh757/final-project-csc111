@@ -14,7 +14,6 @@ import networkx as nx
 import pandas as pd
 
 
-
 ################################################################################
 # _Vertex Class
 ################################################################################
@@ -181,6 +180,11 @@ class Graph:
         """Return a list of up to <n> recommended movies based on similarity to the given book,
         with the given threshold and the movie name.
 
+        Optional arguments:
+        - threshold: represents the smallest possible similarity scores where all similarity score
+        have to be greater than the threshold.
+        - n: the number of recommended movies that the function should display.
+
         Preconditions:
             - self in self._vertices
             - any(movie == title.item for title in self._vertices)
@@ -205,9 +209,11 @@ class Graph:
 
         return movies_so_far
 
-    def movie_info(self, imdb_file: str, item: list[str]) -> dict[Any]:
-        """
-        d is in the form of director, language, country, actor, genres, year, description
+    def movie_info(self, imdb_file: str, items: list[str]) -> dict[Any]:
+        """Return a dictionary for the corresponding elements in the list of items.
+
+        The dictionary, 'd' is in the form of: [director, language, country, actor,
+                                                genres, year, description]
         """
         d = {}
 
@@ -217,8 +223,8 @@ class Graph:
 
             for row in reader:
 
-                for num in range(len(item)):
-                    v = self._vertices[item[num]]
+                for num in range(len(items)):
+                    v = self._vertices[items[num]]
 
                     if row[1] == v.item:
                         d[row[1]] = [v.genres, row[9], row[8], row[7], row[3],
@@ -255,11 +261,11 @@ class Graph:
 # DON'T RUN THIS FUNCTION
 ####################################################################################################
 def chunking(file_name: str) -> None:
-    """Mutates the current directory csv file into chunks of 9537 rows.
+    """Mutates the current directory csv file into chunks of 5366 rows.
 
     Note: We already did this and created a portion folder!
     """
-    size_per_file = 9537
+    size_per_file = 5366
     file_number = 1
 
     for size in pd.read_csv(file_name, chunksize=size_per_file):
@@ -267,14 +273,14 @@ def chunking(file_name: str) -> None:
         file_number += 1
 
 
-if __name__ == '__main__':
-    import python_ta.contracts
-    # python_ta.contracts.check_all_contracts()
-    import python_ta
-    # python_ta.check_all(config={
-    #     'max-line-length': 1000,
-    #     'disable': ['E1136', 'R0914'],
-    #     'extra-imports': ['csv', 'networkx', 'pandas'],
-    #     'allowed-io': ['movie_info'],
-    #     'max-nested-blocks': 4
-    # })
+# if __name__ == '__main__':
+#     import python_ta.contracts
+#     python_ta.contracts.check_all_contracts()
+#     import python_ta
+#     python_ta.check_all(config={
+#         'max-line-length': 1000,
+#         'disable': ['E1136', 'R0914'],
+#         'extra-imports': ['csv', 'networkx', 'pandas'],
+#         'allowed-io': ['movie_info'],
+#         'max-nested-blocks': 4
+#     })
