@@ -3,6 +3,8 @@ from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.widget import Widget
 from kivy.core.window import Window
 from kivy.uix.popup import Popup
+
+import extracting_reviews
 from extracting_reviews import trailers, get_images, fetch_movie_reviews, filtering
 from kivy.config import Config
 import main
@@ -10,6 +12,10 @@ import pprint
 
 portions = input("Enter Portion File: ")
 movies = main.get_recs(portions)
+get_dict = extracting_reviews.filtering(movies)
+keys = list(get_dict.keys())
+
+
 
 
 class MyGrid(Widget):
@@ -42,11 +48,11 @@ class MyGrid(Widget):
         movie2 and movie3 to their respective movie poster
 
         """
-        self.ids.my_image3.source = filtering(movies[0])
 
-        self.ids.my_image2.source = filtering(movies[1])
+        self.ids.my_image3.source = get_dict[keys[0]]
 
-        self.ids.my_image1.source = filtering(movies[2])
+        self.ids.my_image2.source = get_dict[keys[1]]
+        self.ids.my_image1.source = get_dict[keys[2]]
 
 
 class P(FloatLayout):
@@ -153,7 +159,7 @@ def show_popup() -> None:
     Includes the properties for the pop up window once movie1 is clicked
     """
     visual1 = P()
-    popup_movie1 = Popup(title=movies[0], content=visual1, size_hint=(None, None), size=(550, 600),
+    popup_movie1 = Popup(title=keys[0], content=visual1, size_hint=(None, None), size=(550, 600),
                          background_color='#696969')
 
     popup_movie1.open()
@@ -164,7 +170,7 @@ def show_popup2():
     Includes the properties for the pop up window once movie2 is clicked
     """
     visual2 = P2()
-    popup_movie2 = Popup(title=movies[1], content=visual2, size_hint=(None, None), size=(550, 600),
+    popup_movie2 = Popup(title=keys[1], content=visual2, size_hint=(None, None), size=(550, 600),
                          background_color='#696969')
     popup_movie2.open()
 
@@ -174,7 +180,7 @@ def show_popup3():
     Includes the properties for the pop up window once movie3 is clicked
     """
     visual3 = P3()
-    popup_movie3 = Popup(title=movies[2], content=visual3, size_hint=(None, None), size=(550, 600),
+    popup_movie3 = Popup(title=keys[2], content=visual3, size_hint=(None, None), size=(550, 600),
                          background_color='#696969')
 
     popup_movie3.open()
@@ -185,7 +191,7 @@ def show_trailer() -> None:
     The function responsible for opening the Trailer once "Click for the Trailer" is pressed
     within the popup for movie1
     """
-    trailers(movies[0])
+    trailers(keys[0])
 
 
 def show_trailer2() -> None:
@@ -194,7 +200,7 @@ def show_trailer2() -> None:
     within the popup for movie2
     """
 
-    trailers(movies[1])
+    trailers(keys[1])
 
 
 def show_trailer3():
@@ -202,7 +208,7 @@ def show_trailer3():
     The function responsible for opening the Trailer once "Click for the Trailer" is pressed
     within the popup for movie1
     """
-    trailers(movies[2])
+    trailers(keys[2])
 
 
 def description():
@@ -211,24 +217,24 @@ def description():
     popup for movie1
     """
     g = main.loading_graph(portions)
-    info = g.movie_info(portions, [movies[0]])
-    print(info.get(movies[0])[5])
+    info = g.movie_info(portions, [keys[0]])
+    print(info.get(keys[0])[5])
 
 
 def description2() -> None:
     """Shows the description for movie1 once, "Click for the Description" is clicked within the
     popup for movie2"""
     g = main.loading_graph(portions)
-    info = g.movie_info(portions, [movies[1]])
-    print(info.get(movies[1])[5])
+    info = g.movie_info(portions, [keys[1]])
+    print(info.get(keys[1])[5])
 
 
 def description3() -> None:
     """Shows the description for movie1 once, "Click for the Description" is clicked within the
     popup for movie3"""
     g = main.loading_graph(portions)
-    info = g.movie_info(portions, [movies[2]])
-    print(info.get(movies[2])[5])
+    info = g.movie_info(portions, [keys[2]])
+    print(info.get(keys[2])[5])
 
 
 def reviews_1() -> None:

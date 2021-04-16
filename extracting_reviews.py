@@ -14,8 +14,9 @@ from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.keys import Keys
-from typing import List
+from typing import Dict, List
 from webdriver_manager.chrome import ChromeDriverManager
+from transliterate import translit
 
 
 def getdata(url):
@@ -81,7 +82,8 @@ def fetch_movie_reviews(review_title: str) -> dict:
 
 
 def trailers(review_title: str):
-    """..."""
+    """Take a movie as the paramater and auto guides the user to the corresponding
+    trailer on youtube"""
 
     browser = webdriver.Chrome(ChromeDriverManager().install())
     browser.get('https://www.youtube.com')
@@ -105,9 +107,33 @@ def trailers(review_title: str):
 
 
 def get_images(movie: str) -> str:
+    """
+    Returns the image address in the form on .jpg or .png where it webscrapes off the
+    movieposterbd.com for the a movie of choice
+    """
     movie_url = movie.replace(" ", "+")
     data_html = getdata("https://www.movieposterdb.com/search?category=title&q=" + movie_url)
     all_html_parsing = BeautifulSoup(data_html, 'html.parser')
     image_html_info = all_html_parsing.find_all('img')
     lst = image_html_info[2]['src']
     return lst
+
+def filtering(movies: List[str]) -> Dict[str, str]:
+    """
+    ...
+    """
+    lst = {}
+    count = 0
+    # ["A", "B", "C", "D"]
+    for m in movies:
+        pick = get_images(m)
+        if pick != 'https://posters.movieposterdb.com/no-posters-yet':
+            lst[m] = pick
+            count += 1
+        if count == 3:
+            break
+
+    if len(lst) < 3:
+        raise FileNotFoundError
+    else:
+        return lst
