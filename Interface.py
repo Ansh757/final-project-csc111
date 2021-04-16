@@ -9,7 +9,7 @@ import main
 import pprint
 
 portions = input("Enter Portion File: ")
-movies = main.get_portion_file(portions)
+movies = main.loading_graph(portions)
 
 
 class MyGrid(Widget):
@@ -209,7 +209,7 @@ def description():
     Shows the description for movie1 once, "Click for the Description" is clicked within the
     popup for movie1
     """
-    g = main._load_graph(portions)
+    g = main.loading_graph(portions)
     info = g.movie_info(portions, [movies[0]])
     print(info.get(movies[0])[5])
 
@@ -217,7 +217,7 @@ def description():
 def description2() -> None:
     """Shows the description for movie1 once, "Click for the Description" is clicked within the
     popup for movie2"""
-    g = main._load_graph(portions)
+    g = main.loading_graph(portions)
     info = g.movie_info(portions, [movies[1]])
     print(info.get(movies[1])[5])
 
@@ -225,7 +225,7 @@ def description2() -> None:
 def description3() -> None:
     """Shows the description for movie1 once, "Click for the Description" is clicked within the
     popup for movie3"""
-    g = main._load_graph(portions)
+    g = main.loading_graph(portions)
     info = g.movie_info(portions, [movies[2]])
     print(info.get(movies[2])[5])
 
