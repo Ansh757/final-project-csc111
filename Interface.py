@@ -1,11 +1,17 @@
+""""
+
+
+jkashjhasdfuihqowhdahkjankjdhuqiwehjnakjbuyfgs lnbsdhygsbsdnfvuywgfybkjhsdvfuygyi
+
+
+"""
 from kivy.app import App
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.widget import Widget
 from kivy.core.window import Window
 from kivy.uix.popup import Popup
-
 import extracting_reviews
-from extracting_reviews import trailers, get_images, fetch_movie_reviews, filtering
+from extracting_reviews import trailers, fetch_movie_reviews
 from kivy.config import Config
 import main
 import pprint
@@ -14,8 +20,6 @@ portions = input("Enter Portion File: ")
 movies = main.get_recs(portions)
 get_dict = extracting_reviews.filtering(movies)
 keys = list(get_dict.keys())
-
-
 
 
 class MyGrid(Widget):
@@ -50,7 +54,6 @@ class MyGrid(Widget):
         """
 
         self.ids.my_image3.source = get_dict[keys[0]]
-
         self.ids.my_image2.source = get_dict[keys[1]]
         self.ids.my_image1.source = get_dict[keys[2]]
 
@@ -144,10 +147,10 @@ class Top3(App):
     """
     Class that inherits from App, and allows us to build the app
     """
-    def build(self):
+
+    def build(self) -> object:
         """
-        Function that builds the the Top3 App and returns MyGrid, which contains
-        all of the properties for our GUI
+        Returns the MyGrid Widget, the function that builds the the Top3 App
         """
         Window.size = (700, 600)
         Config.set('graphics', 'resizable', '1')
@@ -165,7 +168,7 @@ def show_popup() -> None:
     popup_movie1.open()
 
 
-def show_popup2():
+def show_popup2() -> None:
     """
     Includes the properties for the pop up window once movie2 is clicked
     """
@@ -175,7 +178,7 @@ def show_popup2():
     popup_movie2.open()
 
 
-def show_popup3():
+def show_popup3() -> None:
     """
     Includes the properties for the pop up window once movie3 is clicked
     """
@@ -203,7 +206,7 @@ def show_trailer2() -> None:
     trailers(keys[1])
 
 
-def show_trailer3():
+def show_trailer3() -> None:
     """
     The function responsible for opening the Trailer once "Click for the Trailer" is pressed
     within the popup for movie1
@@ -211,7 +214,7 @@ def show_trailer3():
     trailers(keys[2])
 
 
-def description():
+def description() -> None:
     """
     Shows the description for movie1 once, "Click for the Description" is clicked within the
     popup for movie1
