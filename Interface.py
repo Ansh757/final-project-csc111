@@ -4,7 +4,7 @@ from kivy.uix.widget import Widget
 from kivy.core.window import Window
 from kivy.uix.popup import Popup
 from extracting_reviews import trailers, get_images, fetch_movie_reviews
-
+from kivy.config import Config
 import main
 import pprint
 
@@ -14,7 +14,7 @@ movies = main.get_portion_file(portions)
 
 class MyGrid(Widget):
     """
-    ...
+    Contains all of the properties within the GUI: buttons, texts, images, etc.
     """
 
     def button(self) -> None:
@@ -144,6 +144,7 @@ class Top3(App):
         all of the properties for our GUI
         """
         Window.size = (700, 600)
+        Config.set('graphics', 'resizable', '1')
         return MyGrid()
 
 
