@@ -8,11 +8,13 @@ By: Ansh Malhotra, Armaan Mann, Leya Abubaker
 This file is Copyright (c) 2021 Ansh Malhotra, Armaan Mann, Leya Abubaker
 """
 from __future__ import annotations
-from typing import Any, Union, Optional
+
+from random import random
+from typing import Any, List, Union, Optional
 import csv
 import networkx as nx
 import pandas as pd
-
+import random
 
 ################################################################################
 # _Vertex Class
@@ -176,7 +178,7 @@ class Graph:
         return weight
 
     def movie_recs(self, movie: str, threshold: Optional[float] = 0.0,
-                   n: Optional[int] = 5) -> list[str]:
+                   n: Optional[int] = 5) -> List[str]:
         """Return a list of up to <n> recommended movies based on similarity to the given book,
         with the given threshold and the movie name.
 
@@ -195,17 +197,17 @@ class Graph:
         name_and_score = {}
         v1 = self._vertices.get(movie).item
 
-        lst_books = sorted(self.get_all_vertices(), reverse=True)
+        lst_movies = self.get_all_vertices()
 
-        for v2 in lst_books:
+        for v2 in lst_movies:
             name_and_score[v2] = self.get_similarity_score(v1, v2)
 
         while len(movies_so_far) < n and name_and_score != {}:
-            max_book_score = max(name_and_score, key=name_and_score.get)
-            score_of_book = name_and_score.pop(max_book_score)
-            if (max_book_score != movie) and (score_of_book > threshold) and (
-                    max_book_score not in movies_so_far):
-                movies_so_far.append(max_book_score)
+            max_movie_score = max(name_and_score, key=name_and_score.get)
+            score_of_book = name_and_score.pop(max_movie_score)
+            if (max_movie_score != movie) and (score_of_book > threshold) and (
+                    max_movie_score not in movies_so_far):
+                movies_so_far.append(max_movie_score)
 
         if len(movies_so_far) < 3:
             raise LookupError
