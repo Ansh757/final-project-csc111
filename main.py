@@ -92,7 +92,7 @@ def visualize_graph(graph: Graph,
 
 
 def filtered_graph(imdb_file: str, genre: Optional[list[str]] = None,
-                   director: Optional[list[str]] = None, language: Optional[list[str]] = None,
+                   director: Optional[list[str]] = None,
                    country: Optional[str] = None) -> Graph:
     """Return a movies review graph corresponding to the filtered IMDB dataset.
 
@@ -107,18 +107,17 @@ def filtered_graph(imdb_file: str, genre: Optional[list[str]] = None,
     Optional arguments:
         - genres: the list of genre(s).
         - director: the director of a movie title
-        - language: the language that the movie is in.
         - country: the country in which the movie is made.
 
     As an Example of the parameter should look like:
 
     filtered_graph(imdb_file='portions/portion16.csv', genre=['Animation', 'Comedy', 'Fantasy']
-                ,language='Turkish', country='Turkey', director=None)
+                    ,country='Turkey', director=None)
 
     Preconditions:
         - imdb_file is the path to a CSV file corresponding to the chunks of the IMDB dataset
         given as "portions/portion1.csv".
-        - The given filter should be in the form of language="English" or country="USA".
+        - The given filter should be in the form of country="USA".
         - 1984 <= year <= 2020.
     """
     new_graph = Graph()
@@ -212,11 +211,10 @@ def loading_graph(portion_file):
 
 
 def user_prompts(portion_file: str) -> str:
-    """
-    Creates a prompt for the user to pick a preferred movie based on filtered information
+    """Creates a prompt for the user to pick a preferred movie based on filtered information
 
     Precondition:
-        - input movie must be in imdb dataset
+        -
     """
     g = load_graph(portion_file)
 
@@ -227,15 +225,9 @@ def user_prompts(portion_file: str) -> str:
         print("Invalid selection. Please choose another movie")
 
 
-def get_portion_file(file: str) -> List[str]:
-    """..."""
+def get_recs(file: str) -> List[str]:
+    """Returns the list of 3 recommended movies"""
     new_graph = loading_graph(file)
     get_movies = new_graph.movie_recs(user_prompts(file))
     return get_movies
 
-
-if __name__ == '__main__':
-    # import python_ta.contracts
-    # python_ta.contracts.check_all_contracts()
-    import doctest
-    doctest.testmod()

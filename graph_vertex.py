@@ -261,11 +261,11 @@ class Graph:
 # DON'T RUN THIS FUNCTION
 ####################################################################################################
 def chunking(file_name: str) -> None:
-    """Mutates the current directory csv file into chunks of 5366 rows.
+    """Mutates the current directory csv file into chunks of 1200 rows.
 
     Note: We already did this and created a portion folder!
     """
-    size_per_file = 5366
+    size_per_file = 12000
     file_number = 1
 
     for size in pd.read_csv(file_name, chunksize=size_per_file):
