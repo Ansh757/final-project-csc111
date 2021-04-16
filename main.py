@@ -207,6 +207,7 @@ def multiple_graphs(limit: int) -> None:
 # For the GUI
 ####################################################################################################
 def loading_graph(portion_file):
+    """Returns a loaded graph"""
     return load_graph(portion_file)
 
 
@@ -217,7 +218,7 @@ def user_prompts(portion_file: str) -> str:
     Precondition:
         - input movie must be in imdb dataset
     """
-    g = loading_graph(portion_file)
+    g = load_graph(portion_file)
 
     for _ in range(len(g.get_all_vertices())):
         movie_title = input("What is a movie you like?")
