@@ -101,7 +101,7 @@ def filtered_graph(imdb_file: str, genre: Optional[list[str]] = None,
     The data set must be chosen from the portion folder, you may choose any of the portion csv files
     to visualize the graph.
 
-    Refer to the dataset for specific languages, countries and directors available corresponding
+    Refer to the dataset for countries and directors available corresponding
     to that csv file.
 
     Optional arguments:
@@ -111,14 +111,14 @@ def filtered_graph(imdb_file: str, genre: Optional[list[str]] = None,
 
     As an Example of the parameter should look like:
 
-    filtered_graph(imdb_file='portions/portion16.csv', genre=['Animation', 'Comedy', 'Fantasy']
-                    ,country='Turkey', director=None)
+    filtered_graph(imdb_file='portions/portion1.csv', genre=['Animation', 'Comedy', 'Fantasy']
+                    ,country='Canada', director=None)
 
     Preconditions:
         - imdb_file is the path to a CSV file corresponding to the chunks of the IMDB dataset
         given as "portions/portion1.csv".
         - The given filter should be in the form of country="USA".
-        - 1984 <= year <= 2020.
+        - 1990 <= year <= 2020.
     """
     new_graph = Graph()
     new_dict = {}
@@ -216,7 +216,7 @@ def user_prompts(portion_file: str) -> str:
     Precondition:
         -
     """
-    g = load_graph(portion_file)
+    g = loading_graph(portion_file)
 
     for _ in range(len(g.get_all_vertices())):
         movie_title = input("What is a movie you like?")
