@@ -1,7 +1,8 @@
 """
 Final Project Title: IMDB Recommendation System
 
-Objective: This file includes the Augmented Graph and Vertex taken from the lectures and assignment.
+Objective: This file includes the Augmented Graph and Vertex
+taken from the lectures and assignment 3.
 
 By: Ansh Malhotra, Armaan Mann, Leya Abubaker
 
@@ -195,9 +196,9 @@ class Graph:
         name_and_score = {}
         v1 = self._vertices.get(movie).item
 
-        lst_books = sorted(self.get_all_vertices(), reverse=True)
+        lst_movies = self.get_all_vertices()
 
-        for v2 in lst_books:
+        for v2 in lst_movies:
             name_and_score[v2] = self.get_similarity_score(v1, v2)
 
         while len(movies_so_far) < n and name_and_score != {}:

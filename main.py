@@ -202,18 +202,18 @@ def multiple_graphs(limit: int) -> None:
 
 
 ###################################################################################################
-# For the GUI
+# For the Helpers GUI
 ####################################################################################################
-def loading_graph(portion_file):
+def loading_graph(portion_file: str) -> Graph:
     """Returns a loaded graph"""
     return load_graph(portion_file)
 
 
-def user_prompts(portion_file: str) -> str:
+def user_prompts(portion_file: str) -> Optional[str]:
     """Creates a prompt for the user to pick a preferred movie based on filtered information
 
     Precondition:
-        -
+        - movie_title must be in the portion file.
     """
     g = loading_graph(portion_file)
 
@@ -222,6 +222,8 @@ def user_prompts(portion_file: str) -> str:
         if movie_title in g.get_all_vertices():
             return movie_title
         print("Invalid selection. Please choose another movie")
+    # We must not reach here due to the precondition.
+    return None
 
 
 def get_recs(file: str) -> List[str]:
@@ -230,3 +232,15 @@ def get_recs(file: str) -> List[str]:
     get_movies = new_graph.movie_recs(user_prompts(file))
     return get_movies
 
+
+if __name__ == '__main__':
+    import python_ta.contracts
+    python_ta.contracts.check_all_contracts()
+    import python_ta
+    python_ta.check_all(config={
+        'max-line-length': 1000,
+        'disable': ['E1136', 'R0914', 'W0612', 'E9998', 'R1710'],
+        'extra-imports': ['csv', 'networkx', 'pandas', 'plotly.graph_objs', 'graph_vertex'],
+        'allowed-io': ['load_graph', 'filtered_graph'],
+        'max-nested-blocks': 4
+    })

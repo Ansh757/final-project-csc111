@@ -14,11 +14,11 @@ from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.keys import Keys
-from typing import List
 from webdriver_manager.chrome import ChromeDriverManager
 
 
-def getdata(url):
+def getdata(url: str) -> str:
+    """..."""
     r = requests.get(url)
     return r.text
 
@@ -80,7 +80,7 @@ def fetch_movie_reviews(review_title: str) -> dict:
             "Review Description": review_description}
 
 
-def trailers(review_title: str):
+def trailers(review_title: str) -> None:
     """..."""
 
     browser = webdriver.Chrome(ChromeDriverManager().install())
@@ -105,9 +105,42 @@ def trailers(review_title: str):
 
 
 def get_images(movie: str) -> str:
+    """..."""
     movie_url = movie.replace(" ", "+")
     data_html = getdata("https://www.movieposterdb.com/search?category=title&q=" + movie_url)
     all_html_parsing = BeautifulSoup(data_html, 'html.parser')
     image_html_info = all_html_parsing.find_all('img')
     lst = image_html_info[2]['src']
     return lst
+
+
+def filtering(movies: list[str]) -> list[str]:
+    """
+    ...
+    """
+    lst = []
+    for m in movies:
+        pick = get_images(m)
+        if pick != 'https://posters.movieposterdb.com/no-posters-yet':
+            lst.append(pick)
+        if len(lst) == 3:
+            break
+
+    return lst[0: 2]
+
+
+if __name__ == '__main__':
+    import python_ta.contracts
+    python_ta.contracts.check_all_contracts()
+    import python_ta
+    python_ta.check_all(config={
+        'max-line-length': 1000,
+        'disable': ['E1136', 'R0914', 'W0612'],
+        'extra-imports': ['csv', 'networkx', 'pandas',
+                          'time', 'requests', 'BeautifulSoup', 'bs4', 'selenium',
+                          'Options', 'Keys', 'ChromeDriverManager',
+                          'selenium.webdriver.common.keys', 'selenium.webdriver.chrome.options',
+                          'webdriver_manager.chrome'],
+        'allowed-io': ['movie_info'],
+        'max-nested-blocks': 4
+    })
