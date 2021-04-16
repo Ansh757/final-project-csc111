@@ -92,7 +92,7 @@ def visualize_graph(graph: Graph,
 
 
 def filtered_graph(imdb_file: str, genre: Optional[list[str]] = None,
-                   director: Optional[list[str]] = None,
+                   director: Optional[str] = None,
                    country: Optional[str] = None) -> Graph:
     """Return a movies review graph corresponding to the filtered IMDB dataset.
 
@@ -129,10 +129,9 @@ def filtered_graph(imdb_file: str, genre: Optional[list[str]] = None,
         for row in reader:
 
             check1 = True if country is None or row[7].casefold() == country.casefold() else False
-            check2 = True if language is None or row[8].casefold() == language.casefold() else False
-            check3 = True if director is None or row[9].casefold() == director.casefold() else False
+            check2 = True if director is None or row[9].casefold() in director.casefold() else False
 
-            check = [check1, check2, check3]
+            check = [check1, check2]
 
             genres = [g.strip() for g in row[5].split(",")]
 
@@ -144,8 +143,8 @@ def filtered_graph(imdb_file: str, genre: Optional[list[str]] = None,
                         check.append(True)
 
             if all(check):
-                new_dict[row[1]] = set(genres)
-                new_graph.add_vertex(row[1], set(genres))
+                new_dict[row[2]] = set(genres)
+                new_graph.add_vertex(row[2], set(genres))
 
         for title1 in new_dict:
             for title2 in new_dict:
@@ -176,7 +175,7 @@ def load_graph(imdb_file: str) -> Graph:
         for row in reader1:
             split_ = row[5].strip()
             genres = [genre.strip() for genre in split_.split(",")]
-            new_dict[row[1]] = set(genres)
+            new_dict[row[2]] = set(genres)
 
             new_graph.add_vertex(row[1], set(genres))
 

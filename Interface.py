@@ -9,7 +9,7 @@ import main
 import pprint
 
 portions = input("Enter Portion File: ")
-movies = main.loading_graph(portions)
+movies = main.get_recs(portions)
 
 
 class MyGrid(Widget):

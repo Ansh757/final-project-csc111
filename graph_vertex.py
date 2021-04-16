@@ -226,8 +226,8 @@ class Graph:
                 for num in range(len(items)):
                     v = self._vertices[items[num]]
 
-                    if row[1] == v.item:
-                        d[row[1]] = [v.genres, row[9], row[8], row[7], row[3],
+                    if row[2] == v.item:
+                        d[row[2]] = [v.genres, row[9], row[8], row[7], row[3],
                                      row[13], str(row[12])]
                     if len(d) == 3:
                         break
