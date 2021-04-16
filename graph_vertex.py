@@ -207,6 +207,8 @@ class Graph:
                     max_book_score not in movies_so_far):
                 movies_so_far.append(max_book_score)
 
+        if len(movies_so_far) < 3:
+            raise LookupError
         return movies_so_far
 
     def movie_info(self, imdb_file: str, items: list[str]) -> dict[Any]:
