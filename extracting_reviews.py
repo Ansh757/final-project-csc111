@@ -136,20 +136,10 @@ def filtering(movies: List[str]) -> Dict[str, str]:
         if count == 3:
             break
 
-    if len(lst) > 3:
-        return lst
+    if len(lst) < 3:
+        raise FileNotFoundError
     else:
-        try:
-            len(lst) < 3
-        except LookupError:
-            print("Sorry, Chrome was not able to extract the pictures "
-                  "for the given movie titles")
-
-
-    # if len(lst) < 3:
-    #     raise FileNotFoundError
-    # else:
-    #     return lst
+        return lst
 
 # if __name__ == '__main__':
 #     import python_ta.contracts
