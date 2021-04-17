@@ -224,12 +224,9 @@ class Graph:
             if (max_movie_score != movie) and (score_of_book > threshold) and (
                     max_movie_score not in movies_so_far):
                 movies_so_far.append(max_movie_score)
-        try:
-            len(movies_so_far) == 3
-        except LookupError:
-            print("There are not enough recommended movie(s).")
-        # if len(movies_so_far) < 3:
-        #     raise LookupError
+
+        if len(movies_so_far) < 3:
+            raise LookupError
 
         return movies_so_far
 
