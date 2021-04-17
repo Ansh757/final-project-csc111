@@ -235,14 +235,14 @@ def get_recs(file: str) -> List[str]:
     return get_movies
 
 
-if __name__ == '__main__':
-    import python_ta.contracts
-    python_ta.contracts.check_all_contracts()
-    import python_ta
-    python_ta.check_all(config={
-        'max-line-length': 1000,
-        'disable': ['E1136', 'R0914', 'W0612', 'E9998', 'R1710'],
-        'extra-imports': ['csv', 'networkx', 'pandas', 'plotly.graph_objs', 'graph_vertex'],
-        'allowed-io': ['load_graph', 'filtered_graph'],
-        'max-nested-blocks': 4
-    })
+# if __name__ == '__main__':
+#     import python_ta.contracts
+#     python_ta.contracts.check_all_contracts()
+#     import python_ta
+#     python_ta.check_all(config={
+#         'max-line-length': 1000,
+#         'disable': ['E1136', 'R0914', 'W0612', 'E9998', 'R1710'],
+#         'extra-imports': ['csv', 'networkx', 'pandas', 'plotly.graph_objs', 'graph_vertex'],
+#         'allowed-io': ['load_graph', 'filtered_graph'],
+#         'max-nested-blocks': 4
+#     })

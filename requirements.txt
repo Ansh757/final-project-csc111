@@ -1,0 +1,19 @@
+# CSC111 Winter 2021: Python libraries we'll be using this semester.
+
+# Testing and code checking
+hypothesis~=5.48.0
+pytest~=6.2.1
+python-ta~=1.6.3
+
+# Graphics and data visualization
+plotly~=4.14.1
+pygame~=2.0.1
+
+dataclasses~=0.6
+networkx~=2.5
+
+Kivy~=2.0.0
+pandas~=1.2.4
+requests~=2.25.1
+beautifulsoup4~=4.9.3
+selenium~=3.141.0

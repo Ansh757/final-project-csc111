@@ -207,7 +207,7 @@ class Graph:
             - self in self._vertices
             - any(movie == title.item for title in self._vertices)
             - n >= 1
-            - 0.0 <= threshold < 1.0
+            - 0.0 <= threshold <= 1.0
         """
         movies_so_far = []
         name_and_score = {}
@@ -224,9 +224,12 @@ class Graph:
             if (max_movie_score != movie) and (score_of_book > threshold) and (
                     max_movie_score not in movies_so_far):
                 movies_so_far.append(max_movie_score)
-
-        if len(movies_so_far) < 3:
-            raise LookupError
+        try:
+            len(movies_so_far) == 3
+        except LookupError:
+            print("There are not enough recommended movie(s).")
+        # if len(movies_so_far) < 3:
+        #     raise LookupError
 
         return movies_so_far
 
@@ -298,6 +301,7 @@ def chunking(file_name: str) -> None:
     for size in pd.read_csv(file_name, chunksize=size_per_file):
         size.to_csv("portion" + str(file_number) + '.csv', index=False)
         file_number += 1
+
 
 # if __name__ == '__main__':
 #     import python_ta.contracts
