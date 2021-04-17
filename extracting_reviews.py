@@ -141,9 +141,10 @@ def filtering(movies: List[str]) -> Dict[str, str]:
     else:
         return lst
 
-# if __name__ == '__main__':
-#     import python_ta.contracts
-#     python_ta.contracts.check_all_contracts()
+
+if __name__ == '__main__':
+    import python_ta.contracts
+    python_ta.contracts.check_all_contracts()
 #     import python_ta
 #     python_ta.check_all(config={
 #         'max-line-length': 1000,
