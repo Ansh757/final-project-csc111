@@ -147,6 +147,9 @@ class Graph:
         """Return whether item1 and item2 are adjacent vertices in this graph.
 
         Return False if item1 or item2 do not appear as vertices in this graph.
+
+        Preconditions:
+            - item1 != item2
         """
         if item1 in self._vertices and item2 in self._vertices:
             v1 = self._vertices[item1]
@@ -171,6 +174,9 @@ class Graph:
         """Return the similarity score between the two given items in this graph.
 
         Raise a ValueError if item1 or item2 do not appear as vertices in this graph.
+
+        Preconditions:
+            - item1 != item2
         """
         if item1 in self._vertices and item2 in self._vertices:
             v1 = self._vertices[item1]
@@ -184,6 +190,7 @@ class Graph:
 
         Preconditions:
             - item1 and item2 are vertices in this graph
+            - item1 != item2
         """
         v1 = self._vertices[item1]
         v2 = self._vertices[item2]
@@ -236,7 +243,7 @@ class Graph:
         The dictionary, 'd' is in the form of: [director, language, country, actor,
                                                 genres, year, description]
         Preconditions:
-            - self in self._vertices
+            - self in self._vertices.
             - imdb_file is the path to a CSV file corresponding to the chunks of the IMDB dataset
             given as "portions/portion1.csv" or within the data folder as "data/small_dataset.csv".
             - items must be the movie titles that are within the corresponding file
