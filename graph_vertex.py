@@ -1,27 +1,33 @@
 """
-Final Project Title: IMDB Recommendation System
+Final Project Title: Top3
 
 Objective: This file includes the Augmented Graph and Vertex
 taken from the lectures and assignment 3.
+
+For refernce this handout: https://www.teach.cs.toronto.edu/~csc111h/winter/assignments/a3/handout/
 
 By: Ansh Malhotra, Armaan Mann, Leya Abubaker
 
 This file is Copyright (c) 2021 Ansh Malhotra, Armaan Mann, Leya Abubaker
 """
 from __future__ import annotations
-
-from random import random
 from typing import Any, List, Union, Optional
 import csv
 import networkx as nx
 import pandas as pd
-import random
+
 
 ################################################################################
 # _Vertex Class
 ################################################################################
 class _Vertex:
     """A vertex in a movies graph, used to represent a node for the movie.
+
+    The implementation was from the Assignment 3 and then was augmented for the purposes
+    of our project.
+
+    Used from this https://www.teach.cs.toronto.edu/~csc111h/winter/assignments/a3/handout/
+
 
     List of genres: {'Reality-TV', 'Adventure', 'Drama', 'Biography', 'War', 'Family', 'Music',
     'Crime', 'Film-Noir', 'Romance', 'Musical', 'Comedy', 'Horror', 'News', 'Action', 'Sport',
@@ -65,7 +71,7 @@ class _Vertex:
             return result
 
     def similarity_score(self, other: _Vertex) -> float:
-        """Return the weighted similarity score between this vertex and other.
+        """Return the weighted similarity score between the two vertices.
         """
         if self.degree() == 0 or other.degree() == 0:
             return 0.0
@@ -85,6 +91,12 @@ class _Vertex:
 ################################################################################
 class Graph:
     """A graph used to represent a movie network.
+
+    The implementation of Graph Class was also taken from the Assignment 3
+    and then was further augmented for our purposes.
+
+    Used from this: https://www.teach.cs.toronto.edu/~csc111h/winter/assignments/a3/handout/
+
     """
     # Private Instance Attributes:
     #     - _vertices:
@@ -183,6 +195,9 @@ class Graph:
         """Return a list of up to <n> recommended movies based on similarity to the given book,
         with the given threshold and the movie name.
 
+        Note: You can get more than 5 recommended movies however, we have set it to 5 since we
+        will be using this for the GUI.
+
         Optional arguments:
         - threshold: represents the smallest possible similarity scores where all similarity score
         have to be greater than the threshold.
@@ -197,7 +212,6 @@ class Graph:
         movies_so_far = []
         name_and_score = {}
         v1 = self._vertices.get(movie).item
-
         lst_movies = self.get_all_vertices()
 
         for v2 in lst_movies:
@@ -206,12 +220,14 @@ class Graph:
         while len(movies_so_far) < n and name_and_score != {}:
             max_movie_score = max(name_and_score, key=name_and_score.get)
             score_of_book = name_and_score.pop(max_movie_score)
+
             if (max_movie_score != movie) and (score_of_book > threshold) and (
                     max_movie_score not in movies_so_far):
                 movies_so_far.append(max_movie_score)
 
         if len(movies_so_far) < 3:
             raise LookupError
+
         return movies_so_far
 
     def movie_info(self, imdb_file: str, items: list[str]) -> dict[Any]:
@@ -219,6 +235,12 @@ class Graph:
 
         The dictionary, 'd' is in the form of: [director, language, country, actor,
                                                 genres, year, description]
+        Preconditions:
+            - self in self._vertices
+            - imdb_file is the path to a CSV file corresponding to the chunks of the IMDB dataset
+            given as "portions/portion1.csv" or within the data folder as "data/small_dataset.csv".
+            - items must be the movie titles that are within the corresponding file
+            given in the parameter imdb_file.
         """
         d = {}
 
@@ -266,7 +288,7 @@ class Graph:
 # DON'T RUN THIS FUNCTION
 ####################################################################################################
 def chunking(file_name: str) -> None:
-    """Mutates the current directory csv file into chunks of 1200 rows.
+    """Mutates the current directory csv file into chunks of 12000 rows.
 
     Note: We already did this and created a portion folder!
     """
@@ -276,7 +298,6 @@ def chunking(file_name: str) -> None:
     for size in pd.read_csv(file_name, chunksize=size_per_file):
         size.to_csv("portion" + str(file_number) + '.csv', index=False)
         file_number += 1
-
 
 # if __name__ == '__main__':
 #     import python_ta.contracts

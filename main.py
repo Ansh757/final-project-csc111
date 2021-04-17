@@ -1,9 +1,8 @@
 """
-Final Project Title: IMDB Recommendation System
+Final Project Title: Top3
 
 Objective: The main file which the TA will be running. The purpose of this file
-is to run the functions for the visualizations to view the graphs and using the GUI to view the top
-recommendations
+is to run the functions for the visualizations to view the graphs.
 
 By: Ansh Malhotra, Armaan Mann, Leya Abubaker
 
@@ -15,7 +14,6 @@ from typing import List, Optional
 import networkx as nx
 from plotly.graph_objs import Scatter, Figure, Layout
 from graph_vertex import Graph
-
 
 ####################################################################################################
 # Global Variables for Colours
@@ -34,6 +32,9 @@ def visualize_graph(graph: Graph,
                     max_vertices: int = 5000,
                     output_file: str = '') -> None:
     """Use plotly and networkx to visualize the given graph.
+
+    Taken from the Assignment3 to visualize the graph:
+    https://www.teach.cs.toronto.edu/~csc111h/winter/assignments/a3/handout/
 
     Optional arguments:
         - layout: which graph layout algorithm to use
@@ -98,8 +99,8 @@ def filtered_graph(imdb_file: str, genre: Optional[list[str]] = None,
 
     If a filter is not chosen the key-value pair will have a None type..
 
-    The data set must be chosen from the portion folder, you may choose any of the portion csv files
-    to visualize the graph.
+    The data set must be chosen from either the data folder or the portion folders. Although,
+    we recommend to use the small, or medium or large files, so you dont' have to wait long.
 
     Refer to the dataset for countries and directors available corresponding
     to that csv file.
@@ -110,14 +111,13 @@ def filtered_graph(imdb_file: str, genre: Optional[list[str]] = None,
         - country: the country in which the movie is made.
 
     As an Example of the parameter should look like:
-
     filtered_graph(imdb_file='portions/portion1.csv', genre=['Animation', 'Comedy', 'Fantasy']
                     ,country='Canada', director=None)
 
     Preconditions:
         - imdb_file is the path to a CSV file corresponding to the chunks of the IMDB dataset
-        given as "portions/portion1.csv".
-        - The given filter should be in the form of country="USA".
+        given as "portions/portion1.csv" or within the data folder as "data/small_dataset.csv".
+        - The given filter should be in the form of country="USA" or genres=["Crime"]
         - 1990 <= year <= 2020.
     """
     new_graph = Graph()
@@ -163,7 +163,7 @@ def load_graph(imdb_file: str) -> Graph:
 
     Preconditions:
         - imdb_file is the path to a CSV file corresponding to the chunks of the IMDB dataset
-        given as "portions/portion1.csv".
+        given as "portions/portion1.csv" or within the data folder as "data/small_dataset.csv".
     """
     new_graph = Graph()
     new_dict = {}
@@ -188,24 +188,16 @@ def load_graph(imdb_file: str) -> Graph:
     return new_graph
 
 
-def multiple_graphs(limit: int) -> None:
-    """Return up to <limit> Graphs
-
-    Preconditions:
-        - 1 <= limit <= 11
-    """
-    file_num = 1
-    for _ in range(limit):
-        name = 'portion'
-        visualize_graph(load_graph(name + str(file_num) + '.csv'))
-        file_num += 1
-
-
 ###################################################################################################
 # For the Helpers GUI
 ####################################################################################################
 def loading_graph(portion_file: str) -> Graph:
-    """Returns a loaded graph"""
+    """Returns a loaded graph
+
+    Preconditions:
+        - imdb_file is the path to a CSV file corresponding to the chunks of the IMDB dataset
+        given as "portions/portion1.csv" or within the data folder as "data/small_dataset.csv".
+    """
     return load_graph(portion_file)
 
 
@@ -213,7 +205,11 @@ def user_prompts(portion_file: str) -> Optional[str]:
     """Creates a prompt for the user to pick a preferred movie based on filtered information
 
     Precondition:
-        - movie_title must be in the portion file.
+        - imdb_file is the path to a CSV file corresponding to the chunks of the IMDB dataset
+        given as "portions/portion1.csv" or within the data folder as "data/small_dataset.csv".
+        - Note: When inputting the IO in the console, make sure that the movie_title with no strings
+         (Be watchful for the cases as well) is within the corresponding file
+         as the parameter for imdb_file.
     """
     g = loading_graph(portion_file)
 
@@ -227,7 +223,13 @@ def user_prompts(portion_file: str) -> Optional[str]:
 
 
 def get_recs(file: str) -> List[str]:
-    """Returns the list of 3 recommended movies"""
+    """Returns the list of recommended movies depending on parameter, n within the function in
+    Graph.movie_recs()
+
+    Preconditions:
+        - imdb_file is the path to a CSV file corresponding to the chunks of the IMDB dataset
+        given as "portions/portion1.csv" or within the data folder as "data/small_dataset.csv".
+    """
     new_graph = loading_graph(file)
     get_movies = new_graph.movie_recs(user_prompts(file))
     return get_movies

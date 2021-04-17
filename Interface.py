@@ -1,9 +1,12 @@
 """"
+Final Project Title: Top3
 
+Objective: This file is the interface of the project which displays a small pop which will contain
+the recommended movies provided by the algorithm.
 
-jkashjhasdfuihqowhdahkjankjdhuqiwehjnakjbuyfgs lnbsdhygsbsdnfvuywgfybkjhsdvfuygyi
+By: Ansh Malhotra, Armaan Mann, Leya Abubaker
 
-
+This file is Copyright (c) 2021 Ansh Malhotra, Armaan Mann, Leya Abubaker
 """
 from kivy.app import App
 from kivy.uix.floatlayout import FloatLayout
@@ -42,17 +45,14 @@ class MyGrid(Widget):
     def button3(self) -> None:
         """
         Represents the first button for Movie3 contains the popup once movie1 button is pressed
-
         """
         show_popup3()
 
     def image_appear(self) -> None:
         """
         Once the "Top Recommendations" Button is pressed, it changes the images for movie1,
-        movie2 and movie3 to their respective movie poster
-
+        movie2 and movie3 to their respective movie poster.
         """
-
         self.ids.my_image3.source = get_dict[keys[0]]
         self.ids.my_image2.source = get_dict[keys[1]]
         self.ids.my_image1.source = get_dict[keys[2]]
@@ -82,7 +82,6 @@ class P(FloatLayout):
         """
         Function launches the reviews_1 function, which displays the reviews for movie1, once
         "Click for Reviews" is pressed.
-
         """
         reviews_1()
 
@@ -164,7 +163,6 @@ def show_popup() -> None:
     visual1 = P()
     popup_movie1 = Popup(title=keys[0], content=visual1, size_hint=(None, None), size=(550, 600),
                          background_color='#696969')
-
     popup_movie1.open()
 
 
@@ -233,7 +231,8 @@ def description2() -> None:
 
 
 def description3() -> None:
-    """Shows the description for movie1 once, "Click for the Description" is clicked within the
+    """
+    Shows the description for movie1 once, "Click for the Description" is clicked within the
     popup for movie3"""
     g = main.loading_graph(portions)
     info = g.movie_info(portions, [keys[2]])

@@ -1,5 +1,5 @@
 """
-Final Project Title: IMDB Recommendation System
+Final Project Title: Top3
 
 Objective: Fetch the reviews from the internet and converting it into a CSV file such that
 we can use it for the UI
@@ -14,20 +14,23 @@ from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.keys import Keys
+from typing import Dict, List
 from webdriver_manager.chrome import ChromeDriverManager
 
 
+####################################################################################################
+# Helper Functions implemented for the GUI.
+####################################################################################################
 def getdata(url: str) -> str:
-    """..."""
+    """Returns the HTML text for the specified url that is entered."""
     r = requests.get(url)
     return r.text
 
 
 def fetch_movie_reviews(review_title: str) -> dict:
-    """
-    Return a dictionary, where the key is the title of the review and the value
+    """Return a dictionary, where the key is the title of the review and the value
     is the description corresponding to the title. Takes in a set of titles and returns
-    the reviews for those
+    the reviews for those.
     """
 
     # First we need to set up the browser
@@ -80,8 +83,9 @@ def fetch_movie_reviews(review_title: str) -> dict:
             "Review Description": review_description}
 
 
-def trailers(review_title: str) -> None:
-    """..."""
+def trailers(review_title: str):
+    """Take a movie as the parameter and auto guides the user to the corresponding
+    trailer on youtube"""
 
     browser = webdriver.Chrome(ChromeDriverManager().install())
     browser.get('https://www.youtube.com')
@@ -105,7 +109,10 @@ def trailers(review_title: str) -> None:
 
 
 def get_images(movie: str) -> str:
-    """..."""
+    """
+    Returns the image address in the form on .jpg or .png where it webscrapes off the
+    movieposterbd.com for the a movie of choice
+    """
     movie_url = movie.replace(" ", "+")
     data_html = getdata("https://www.movieposterdb.com/search?category=title&q=" + movie_url)
     all_html_parsing = BeautifulSoup(data_html, 'html.parser')
@@ -114,19 +121,25 @@ def get_images(movie: str) -> str:
     return lst
 
 
-def filtering(movies: list[str]) -> list[str]:
+def filtering(movies: List[str]) -> Dict[str, str]:
+    """Returns a dictionary, where the key is the title of the movie and the value is the
+    link for the movie poster. Additionally, if the movie as an invalid link, the movie is skipped
+    and next movie is considered.
     """
-    ...
-    """
-    lst = []
+    lst = {}
+    count = 0
     for m in movies:
         pick = get_images(m)
         if pick != 'https://posters.movieposterdb.com/no-posters-yet':
-            lst.append(pick)
-        if len(lst) == 3:
+            lst[m] = pick
+            count += 1
+        if count == 3:
             break
 
-    return lst[0: 2]
+    if len(lst) < 3:
+        raise FileNotFoundError
+    else:
+        return lst
 
 
 if __name__ == '__main__':
