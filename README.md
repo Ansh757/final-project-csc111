@@ -1,5 +1,5 @@
 # Final Project for CSC111: Foundations of Computer Science II 
-First Year at University of Toronto
+Contributors: Ansh, Armaan and Leya 
 
 
 # Motivation Behind the Project
