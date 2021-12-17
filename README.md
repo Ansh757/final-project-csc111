@@ -1,5 +1,5 @@
-# CSC111
-Final Project in 1st Year, using Graphs
+# Final Project for CSC111: Foundations of Computer Science II 
+First Year at University of Toronto
 
 
 # Motivation Behind the Project
