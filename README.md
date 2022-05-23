@@ -10,4 +10,4 @@ The goal was to build a recommendation system that will recommend movies based o
 
 
 # Dataset Used: 
-https://www.kaggle.com/stefanoleone992/imdb-extensive-dataset -- We found this massive 81,000 rows with 22 columns dataset contains the list of the movies on IMBD.   
+https://www.kaggle.com/stefanoleone992/imdb-extensive-dataset -- We found this massive dataset with 81,000 rows with 22 columns dataset contains the list of the movies on IMBD.   
